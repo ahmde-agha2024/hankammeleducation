@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/auth_api_controllers.dart';
 import 'package:hankammeleducation/model/api_response.dart';
+import 'package:hankammeleducation/screens/bottomNavigationBar.dart';
 import 'package:hankammeleducation/utils/helpers.dart';
 import 'register_screen.dart';
 import 'verifyPhone_screen.dart';
@@ -137,9 +138,10 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                         textStyle: GoogleFonts.cairo(),
                         backgroundColor: Color(0xff118ab2)),
                   ),
+
             TextButton(
               style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero, alignment: Alignment.topCenter),
+                  padding: EdgeInsets.zero,),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -154,6 +156,36 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                   fontSize: 8,
                 ),
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.person,
+                  color: Color(0xff118ab2),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BottomNavigationScreen()),
+                      (route) => false,
+                    );
+
+                  },
+                  child: Text(
+                    'تصفح كزائر',
+                    style: GoogleFonts.cairo(
+                      color: Color(0xff118ab2),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 9,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

@@ -91,36 +91,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 builder: (context) => TermsAndConditions()));
                       },
                     ),
-                    SupportItem(
-                      icon: Icons.person_remove,
-                      title: 'إغلاق الحساب',
-                      onTap: () {
-                        _showConfirmationDialog(context);
-                      },
-                    ),
+                    SharedPrefController()
+                                .getByKey(key: PrefKeys.isLoggedIn.name) ==
+                            null
+                        ? SizedBox()
+                        : SupportItem(
+                            icon: Icons.person_remove,
+                            title: 'إغلاق الحساب',
+                            onTap: () {
+                              _showConfirmationDialog(context);
+                            },
+                          ),
                   ],
                 ),
               ),
             ),
-            TextButton(
-              onPressed: () {
-
-                SharedPrefController().logout();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                  (route) => false,
-                );
-              },
-              child: Text(
-                'تسجيل الخروج',
-                style: GoogleFonts.cairo(
-                  color: Colors.teal,
-                  fontSize: 9,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            SharedPrefController().getByKey(key: PrefKeys.isLoggedIn.name) ==
+                    null
+                ? SizedBox()
+                : TextButton(
+                    onPressed: () async {
+                      await SharedPrefController().logout();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                        (route) => false,
+                      );
+                    },
+                    child: Text(
+                      'تسجيل الخروج',
+                      style: GoogleFonts.cairo(
+                        color: Colors.teal,
+                        fontSize: 9,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

@@ -23,7 +23,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
     Future.delayed(const Duration(seconds: 3), () async {
       var route = SharedPrefController().loggedIn
           ? BottomNavigationScreen()
-          : BottomNavigationScreen();
+          : LoginScreen();
 
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => route));

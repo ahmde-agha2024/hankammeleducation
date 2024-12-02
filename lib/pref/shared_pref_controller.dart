@@ -9,7 +9,8 @@ enum PrefKeys {
   lastname,
   gender,
   phoneNumber,
-  listCategory
+  listCategory,
+  docIdUser
 }
 
 class SharedPrefController {
@@ -39,6 +40,8 @@ class SharedPrefController {
         PrefKeys.phoneNumber.name, user.user.phoneNumber);
     await _sharedPreferences.setString(
         PrefKeys.token.name, 'Bearer ${user.jwt}');
+    await _sharedPreferences.setString(
+        PrefKeys.docIdUser.name, user.user.documentId);
   }
 
   Future<void> clear() async => _sharedPreferences.clear();
@@ -57,8 +60,7 @@ class SharedPrefController {
 
   Future<void> logout() async {
     await _sharedPreferences.clear();
-   await _sharedPreferences.setBool(PrefKeys.isLoggedIn.name, false);
-
+    //await _sharedPreferences.setBool(PrefKeys.isLoggedIn.name, false);
   }
 
   Future<void> listCategory({required List<String> listAll}) async {

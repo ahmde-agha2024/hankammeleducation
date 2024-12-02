@@ -33,8 +33,8 @@ class _AnnouncementsState extends State<Announcements> {
       child: Column(
         children: [
           FutureBuilder<BookListModel>(
-              future: ApiController()
-                  .getCourseDetails(documentId: widget.documentId),
+              future: ApiController().getCourseDetails(
+                  documentId: widget.documentId, pop: "populate=*"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Shimmer.fromColors(

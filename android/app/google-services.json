@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "501181434655",
-    "project_id": "hankammeleducation",
-    "storage_bucket": "hankammeleducation.appspot.com"
+    "project_number": "1084624060866",
+    "project_id": "hankamel-talem",
+    "storage_bucket": "hankamel-talem.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:501181434655:android:9a4c3edc121238f9ccfe2a",
+        "mobilesdk_app_id": "1:1084624060866:android:46453d926d85784a50565b",
         "android_client_info": {
           "package_name": "com.example.hankammelapp"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDF4Ga2OXpH_NyX3Q8hEKXmJ_Vf--jDFLc"
+          "current_key": "AIzaSyCMZKRhwUS-MpxO4L9Ao7Lv9tR_BJENZ2E"
         }
       ],
       "services": {

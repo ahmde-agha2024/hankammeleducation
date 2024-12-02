@@ -9,16 +9,17 @@ import 'package:hankammeleducation/model/api_response.dart';
 import 'package:hankammeleducation/model/book_list.dart';
 import 'package:hankammeleducation/pref/shared_pref_controller.dart';
 import 'package:hankammeleducation/screens/auth_screens/login_screen.dart';
+import 'package:hankammeleducation/screens/mycoursedetails.dart';
 import 'package:hankammeleducation/utils/helpers.dart';
 
-class CourseScreen extends StatefulWidget {
-  CourseScreen(
+class MyCourseScreenTwo extends StatefulWidget {
+  MyCourseScreenTwo(
       {required this.documentId,
-      required this.title,
-      required this.grade,
-      required this.description,
-      required this.enrolled,
-      super.key});
+        required this.title,
+        required this.grade,
+        required this.description,
+        required this.enrolled,
+        super.key});
 
   String documentId;
   String title;
@@ -27,10 +28,10 @@ class CourseScreen extends StatefulWidget {
   bool enrolled;
 
   @override
-  State<CourseScreen> createState() => _CourseScreenState();
+  State<MyCourseScreenTwo> createState() => _MyCourseScreenTwoState();
 }
 
-class _CourseScreenState extends State<CourseScreen>
+class _MyCourseScreenTwoState extends State<MyCourseScreenTwo>
     with SingleTickerProviderStateMixin, Helpers {
   late TabController _tabController;
   List<String> allCourses = [];
@@ -102,8 +103,6 @@ class _CourseScreenState extends State<CourseScreen>
                   for (BookListModel i in snapshot.data!) {
                     allCourses.add(i.title!.toString());
                   }
-
-                  print(allCourses.toString());
                   return SizedBox();
                 } else {
                   return SizedBox();
@@ -151,7 +150,7 @@ class _CourseScreenState extends State<CourseScreen>
           ),
           Expanded(
             child: TabBarView(controller: _tabController, children: [
-              CourseDetails(
+              MyCourseDetails(
                 title: widget.title,
                 description: widget.description,
                 grade: widget.grade,
@@ -164,31 +163,6 @@ class _CourseScreenState extends State<CourseScreen>
               ),
             ]),
           ),
-          widget.enrolled
-              ? const SizedBox()
-              : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await _performEnrolled();
-                    },
-                    child: Text(
-                      'سجل الآن',
-                      style: GoogleFonts.cairo(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        minimumSize: const Size(double.infinity, 40),
-                        elevation: 0,
-                        textStyle: GoogleFonts.cairo(),
-                        backgroundColor: Color(0xff073b4c)),
-                  ),
-                ),
           SizedBox(
             height: 20,
           )
@@ -197,49 +171,5 @@ class _CourseScreenState extends State<CourseScreen>
     );
   }
 
-  Future<void> _performEnrolled() async {
-    final status =
-        await SharedPrefController().getByKey(key: PrefKeys.isLoggedIn.name) !=
-            null;
-    if (status) {
-      return await _enrolledCourse();
-    } else {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-        (route) => false,
-      );
-    }
-  }
 
-  Future<void> _enrolledCourse() async {
-    final connect =
-        await SharedPrefController().getByKey(key: PrefKeys.docIdUser.name);
-    // setState(() {
-    //   loading = true;
-    // });
-    ApiResponse apiResponse =
-        await ApiController().enrolledCours(connect, widget.documentId);
-    if (apiResponse.success) {
-      setState(() {
-        widget.enrolled = true;
-      });
-      showSnackBar(context,
-          message: apiResponse.message, error: !apiResponse.success);
-      // Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => VerifyPhone(
-      //           phoneNumber: _mobilecontroller.text,
-      //         )));
-    } else {
-      // setState(() {
-      showSnackBar(context,
-          message: apiResponse.message, error: !apiResponse.success);
-      // });
-    }
-    // setState(() {
-    //   loading = false;
-    // });
-  }
 }

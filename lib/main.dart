@@ -1,22 +1,16 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hankammeleducation/screens/launchscreen.dart';
+import 'package:hankammeleducation/search/search.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hankammeleducation/screens/auth_screens/login_screen.dart';
-import 'package:hankammeleducation/screens/auth_screens/verifyPhone_screen.dart';
 import 'package:hankammeleducation/screens/connectionstate.dart';
-import 'package:hankammeleducation/course/courseDetails.dart';
-import 'package:hankammeleducation/screens/profile_screen.dart';
-import 'package:hankammeleducation/utils/helpers.dart';
 import 'pref/shared_pref_controller.dart';
-import 'screens/auth_screens/register_screen.dart';
-import 'screens/bottomNavigationBar.dart';
-import 'screens/home_screen.dart';
-import 'screens/launchscreen.dart';
-
+import 'screens/quiz/quiz_screen.dart';
+import 'screens/webview_screen.dart';
 bool isConnected = false;
 
 void main() async {
@@ -26,6 +20,7 @@ void main() async {
   await Firebase.initializeApp();
   await Hive.initFlutter(); // تهيئة Hive
   await Hive.openBox('downloads'); // فتح صندوق التحميلات
+  //WebViewPlatform.instance = WebWebViewPlatform();
 
   runApp(MyApp());
 }
@@ -43,21 +38,28 @@ Future<void> checkInternetConnection() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: const [
-          //AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate
-        ],
-        supportedLocales: const [Locale('ar'), Locale('en')],
-        locale: Locale('ar'),
-        title: '',
-        theme: ThemeData(
-          useMaterial3: true,
-          primarySwatch: Colors.blue,
-        ),
-        home: isConnected ? LaunchScreen() : ConnectionStateScreen());
+    return ScreenUtilInit(
+      designSize: const Size(1080, 2340),
+      minTextAdapt: true,
+      builder: (context, child) {
+        return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              //AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate
+            ],
+            supportedLocales: const [Locale('ar'), Locale('en')],
+            locale: const Locale('ar'),
+            title: '',
+            theme: ThemeData(
+              useMaterial3: true,
+              primarySwatch: Colors.blue,
+            ),
+            home:
+                isConnected ? LaunchScreen() : const ConnectionStateScreen());
+      },
+    );
   }
 }

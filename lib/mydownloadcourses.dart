@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -18,7 +20,9 @@ class MyDownloads extends StatefulWidget {
 class _MyDownloadsState extends State<MyDownloads> with Helpers {
   final Box _downloadsBox = Hive.box('downloads'); // الوصول إلى صندوق التحميلات
   String _selectedCategory = "الكل"; // التصنيف الحالي
-  bool status =false;
+  bool status = false;
+  bool isConnected = false;
+
   void deleteDownload(int index) {
     _downloadsBox.deleteAt(index); // حذف عنصر من Hive
     setState(() {}); // تحديث الواجهة
@@ -35,13 +39,27 @@ class _MyDownloadsState extends State<MyDownloads> with Helpers {
   @override
   void initState() {
     // TODO: implement initState
+    checkInternetConnection();
     super.initState();
+  }
+
+  Future<void> checkInternetConnection() async {
+    final result = await InternetAddress.lookup('example.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      setState(() {
+        isConnected = true;
+      });
+    } else {
+      setState(() {
+        isConnected = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    status = SharedPrefController().getByKey(key: PrefKeys.listCategory.name) == null;
-
+    status = SharedPrefController().getByKey(key: PrefKeys.listCategory.name) ==
+        null;
     final downloads = _selectedCategory == "الكل"
         ? _downloadsBox.values.toList()
         : _downloadsBox.values
@@ -49,13 +67,36 @@ class _MyDownloadsState extends State<MyDownloads> with Helpers {
             .toList();
 
     return status
-        ? Center(
-            child: Text(
-              "لا يوجد بيانات",
-              style:
-                  GoogleFonts.cairo(fontSize: 14, fontWeight: FontWeight.bold),
-            ),
-          )
+        ? isConnected
+            ? Center(
+                child: Container(
+                  height: 220,
+                  width: 220,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'images/nodata.jpg',
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            : Scaffold(
+      backgroundColor: Colors.white,
+                body: Center(
+                  child: Container(
+                    height: 220,
+                    width: 220,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                          'images/nodata.jpg',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
         : Column(
             children: [
               Padding(

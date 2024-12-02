@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
 import 'package:hankammeleducation/model/home.dart';
 import 'package:hankammeleducation/pref/shared_pref_controller.dart';
+import 'package:hankammeleducation/search/search.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -20,13 +21,70 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final controller_page = PageController(viewportFraction: 1.2, keepPage: true);
+  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _gradeController = TextEditingController();
+  bool _isLoading = false;
+  bool _statusSearch = false;
   bool isConnected = false;
+  late Future<List<HomeModel>> _future;
+
+  void _performSearch() async {
+    final grade = _gradeController.text.trim();
+    final searchText = _searchController.text.trim();
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final results = await ApiController().searchCourses(grade, searchText);
+      setState(() {
+        _isLoading = false;
+        _statusSearch = false;
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ResultsPage(results: results),
+        ),
+      );
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+        _statusSearch = false;
+      });
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(
+            "خطأ",
+            style: GoogleFonts.cairo(),
+          ),
+          content: Text(
+            "خطأ في جلب البيانات $error",
+            style: GoogleFonts.cairo(),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                "حسناً",
+                style: GoogleFonts.cairo(),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     checkInternetConnection();
     super.initState();
+    _future = ApiController().getHome();
   }
 
   @override
@@ -53,24 +111,127 @@ class _HomeScreenState extends State<HomeScreen> {
                   )),
               IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      _statusSearch = !_statusSearch;
+                    });
+                  },
                   icon: Image.asset(
                     width: 35,
                     height: 35,
                     'images/searchComplete.png',
                   )),
               Spacer(),
-              Align(
-                alignment: Alignment.topRight,
-                child: Text(
-                  " أهلاً وسهلاً بك : ${SharedPrefController().getByKey(key: PrefKeys.firstname.name)}",
-                  style: GoogleFonts.cairo(
-                      fontWeight: FontWeight.bold, fontSize: 8),
-                ),
-              ),
+              SharedPrefController().getByKey(key: PrefKeys.isLoggedIn.name) ==
+                      null
+                  ? SizedBox()
+                  : Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        " أهلاً وسهلاً بك : ${SharedPrefController().getByKey(key: PrefKeys.firstname.name)}",
+                        style: GoogleFonts.cairo(
+                            fontWeight: FontWeight.bold, fontSize: 8),
+                      ),
+                    ),
             ],
           ),
         ),
+        Visibility(visible: _statusSearch, child: SizedBox(height: 16)),
+        Visibility(
+          visible: _statusSearch,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 14),
+            child: SizedBox(
+              width: double.infinity,
+              height: 40,
+              child: TextField(
+                controller: _gradeController,
+                onChanged: (value) {},
+                keyboardType: TextInputType.number,
+                style: GoogleFonts.cairo(fontSize: 8),
+                decoration: InputDecoration(
+                    labelText: 'الصف (على سبيل المثال، 2)',
+                    hintText: "أدخل الصف الدراسي",
+                    hintStyle: GoogleFonts.cairo(fontSize: 8),
+                    labelStyle:
+                        GoogleFonts.cairo(fontSize: 8, color: Colors.black54),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            BorderSide(width: 1, color: Color(0xffef476f))),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            BorderSide(width: 1, color: Color(0xffef476f)))),
+              ),
+            ),
+          ),
+        ),
+        Visibility(visible: _statusSearch, child: SizedBox(height: 16)),
+        Visibility(
+          visible: _statusSearch,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 14),
+            child: SizedBox(
+              width: double.infinity,
+              height: 40,
+              child: TextField(
+                controller: _searchController,
+                onChanged: (value) {},
+                keyboardType: TextInputType.text,
+                style: GoogleFonts.cairo(fontSize: 8),
+                decoration: InputDecoration(
+                    labelText: 'المادة (على سبيل المثال، الرياضيات)',
+                    hintText: "أدخل إسم المادة",
+                    hintStyle: GoogleFonts.cairo(fontSize: 8),
+                    labelStyle:
+                        GoogleFonts.cairo(fontSize: 8, color: Colors.black54),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            BorderSide(width: 1, color: Color(0xffef476f))),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            BorderSide(width: 1, color: Color(0xffef476f)))),
+              ),
+            ),
+          ),
+        ),
+        Visibility(visible: _statusSearch, child: SizedBox(height: 16)),
+        _isLoading
+            ? Visibility(
+                visible: _statusSearch,
+                child: const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1.0,
+                    color: Color(0xff073b4c),
+                  ),
+                ),
+              )
+            : Visibility(
+                visible: _statusSearch,
+                child: ElevatedButton(
+                  onPressed: _performSearch,
+                  child: Text(
+                    'بحث',
+                    style: GoogleFonts.cairo(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      minimumSize: const Size(80, 35),
+                      elevation: 0,
+                      textStyle: GoogleFonts.cairo(),
+                      backgroundColor: Color(0xff073b4c)),
+                ),
+              ),
         SizedBox(
           height: 20,
         ),
@@ -124,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 20,
         ),
         FutureBuilder<List<HomeModel>>(
-            future: ApiController().getHome(),
+            future: _future,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Expanded(
@@ -180,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                                 builder: (context) => PrimaryStages(
                                       id: snapshot.data![index].id.toString(),
-                                  title: snapshot.data![index].title!,
+                                      title: snapshot.data![index].title!,
                                     )),
                           );
                         },
@@ -191,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
               } else {
                 return Center(
                   child: Text(
-                    snapshot.error.toString(),
+                    'لا يوجد بيانات',
                     style: GoogleFonts.cairo(
                         fontSize: 14, fontWeight: FontWeight.bold),
                   ),
@@ -204,15 +365,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> checkInternetConnection() async {
     final result = await InternetAddress.lookup('example.com');
-    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty){
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
       setState(() {
         isConnected = true;
-
       });
-    }else{
+    } else {
       setState(() {
         isConnected = false;
-
       });
     }
   }

@@ -5,7 +5,6 @@ import 'package:hankammeleducation/api/controllers/api_controller.dart';
 import 'package:hankammeleducation/model/about.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../model/privacypolicy.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});

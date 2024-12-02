@@ -3,28 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
-import 'package:hankammeleducation/course/course.dart';
 import 'package:hankammeleducation/model/book_list.dart';
+import 'package:hankammeleducation/pref/shared_pref_controller.dart';
+import 'package:hankammeleducation/screens/mycourse2.dart';
 import 'package:shimmer/shimmer.dart';
 
-class BookList extends StatefulWidget {
-  BookList({required this.title, required this.id});
-
-  String id;
-  String title;
+class MyCourses extends StatefulWidget {
+  MyCourses();
 
   @override
-  _BookListState createState() => _BookListState();
+  _MyCoursesState createState() => _MyCoursesState();
 }
 
-class _BookListState extends State<BookList> {
+class _MyCoursesState extends State<MyCourses> {
   bool isConnected = false;
-  double progress = 0.3;
+  int? userId;
 
   @override
   void initState() {
     // TODO: implement initState
     checkInternetConnection();
+    userId = SharedPrefController().getByKey(key: PrefKeys.id.name) ?? 0;
+    print(userId);
     super.initState();
   }
 
@@ -36,15 +36,15 @@ class _BookListState extends State<BookList> {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
-          widget.title,
+          'موادي',
           style: GoogleFonts.cairo(fontSize: 11, fontWeight: FontWeight.bold),
         ),
       ),
       body: FutureBuilder<List<BookListModel>>(
-          future: ApiController()
-              .getBookList(subCategoryEqual: widget.id, populate: '*'),
+          future: ApiController().getEnrolledCourses(userId: userId!),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+            if (isConnected &&
+                snapshot.connectionState == ConnectionState.waiting) {
               return Shimmer.fromColors(
                 baseColor: Colors.grey[300]!,
                 highlightColor: Colors.grey[100]!,
@@ -84,14 +84,15 @@ class _BookListState extends State<BookList> {
                 ),
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  double progress = snapshot.data![index].courseCompletion!.toDouble();
-                  progress = progress/100;
+                  double progress =
+                      snapshot.data![index].courseCompletion!.toDouble();
+                  progress = progress / 100;
                   return InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CourseScreen(
+                            builder: (context) => MyCourseScreenTwo(
                                   documentId: snapshot.data![index].documentId!,
                                   title: snapshot.data![index].title!,
                                   grade:
@@ -150,7 +151,7 @@ class _BookListState extends State<BookList> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 4.0,bottom: 5),
+                              padding: const EdgeInsets.only(right: 4.0),
                               child: Row(
                                 children: [
                                   // Text("التقييم :",
@@ -158,14 +159,14 @@ class _BookListState extends State<BookList> {
                                   //         //decoration: TextDecoration.lineThrough,
                                   //         fontSize: 12,
                                   //         fontWeight: FontWeight.bold)),
-
-
                                   Expanded(
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 4),
                                       child: LinearProgressIndicator(
                                         borderRadius: BorderRadius.circular(12),
-                                        value: progress/10, // نسبة التقدم
+                                        value: progress / 10,
+                                        // نسبة التقدم
                                         minHeight: 5,
                                         color: Colors.blue,
                                         backgroundColor: Colors.grey[300],
@@ -173,7 +174,8 @@ class _BookListState extends State<BookList> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4),
                                     child: Text(
                                       '${(progress).toStringAsFixed(1)}%',
                                       style: GoogleFonts.cairo(
@@ -181,26 +183,9 @@ class _BookListState extends State<BookList> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                  // RatingBar.builder(
-                                  //     itemSize: 15,
-                                  //     initialRating: 3,
-                                  //     minRating: 1,
-                                  //     itemCount: 5,
-                                  //     direction: Axis.horizontal,
-                                  //     allowHalfRating: true,
-                                  //     ignoreGestures: false,
-                                  //     itemBuilder: (context, _) => const Icon(
-                                  //           Icons.star,
-                                  //           color: Colors.amber,
-                                  //         ),
-                                  //     onRatingUpdate: (rating) async {
-                                  //       setState(() {});
-                                  //     }),
                                 ],
                               ),
                             ),
-
-
                             Divider(
                               thickness: 0.5,
                             ),

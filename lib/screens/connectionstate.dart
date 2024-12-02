@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hankammeleducation/mydownloadcourses.dart';
 import 'package:hankammeleducation/pref/shared_pref_controller.dart';
 import 'package:hankammeleducation/screens/auth_screens/login_screen.dart';
 import 'package:hankammeleducation/screens/bottomNavigationBar.dart';
@@ -77,17 +78,24 @@ class _ConnectionStateScreenState extends State<ConnectionStateScreen>
                   textStyle: GoogleFonts.cairo(),
                   backgroundColor: Color(0xff118ab2)),
             ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'إذهب إلى التحميلات',
-                style: GoogleFonts.cairo(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline,
-                    fontSize: 9),
-              ),
-            )
+            SharedPrefController().getByKey(key: PrefKeys.isLoggedIn.name)
+                ? TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyDownloads()));
+                    },
+                    child: Text(
+                      'إذهب إلى التحميلات',
+                      style: GoogleFonts.cairo(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                          fontSize: 9),
+                    ),
+                  )
+                : SizedBox()
           ],
         ),
       ),
@@ -107,8 +115,6 @@ class _ConnectionStateScreenState extends State<ConnectionStateScreen>
               context, MaterialPageRoute(builder: (context) => route));
         });
       }
-    } on SocketException catch (_) {
-
-    }
+    } on SocketException catch (_) {}
   }
 }

@@ -33,7 +33,7 @@ class AuthApiController with ApiHelper {
     var jsonResponse = jsonDecode(response.body);
     if (jsonResponse["data"]['success']) {
       LoginResponse user = LoginResponse.fromJson(jsonResponse);
-      SharedPrefController().save(user: user);
+     await SharedPrefController().save(user: user);
       return ApiResponse(
           message: jsonResponse["data"]['message'],
           success: jsonResponse["data"]['success']);
