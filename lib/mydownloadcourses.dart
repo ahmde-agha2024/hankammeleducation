@@ -4,9 +4,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shamssgazaa/course/viemo.dart';
-import 'package:shamssgazaa/pref/shared_pref_controller.dart';
-import 'package:shamssgazaa/utils/helpers.dart';
+import 'package:hankammeleducation/course/viemo.dart';
+import 'package:hankammeleducation/pref/shared_pref_controller.dart';
+import 'package:hankammeleducation/utils/helpers.dart';
 
 class MyDownloads extends StatefulWidget {
   MyDownloads({super.key});

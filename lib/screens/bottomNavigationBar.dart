@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shamssgazaa/mydownloadcourses.dart';
-import 'package:shamssgazaa/screens/home_screen.dart';
-import 'package:shamssgazaa/screens/my_course_screen.dart';
-import 'package:shamssgazaa/widget/btn_screen.dart';
+import 'package:hankammeleducation/mydownloadcourses.dart';
+import 'package:hankammeleducation/screens/home_screen.dart';
+import 'package:hankammeleducation/widget/btn_screen.dart';
 
 import 'primary_stages.dart';
 import 'profile_screen.dart';
@@ -25,7 +24,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
 
   late List<BtnScreen> _btnScreen = <BtnScreen>[
     BtnScreen(widget: HomeScreen(), title: 'Home'),
-    BtnScreen(widget: MyCourseScreen(), title: 'My Course'),
+    BtnScreen(widget: MyDownloads(), title: 'My Course'),
     BtnScreen(widget: MyDownloads(), title: 'Downloads'),
     BtnScreen(widget: ProfileScreen(), title: 'Profile'),
   ];

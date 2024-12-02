@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shamssgazaa/api/controllers/api_controller.dart';
-import 'package:shamssgazaa/course/announcements.dart';
-import 'package:shamssgazaa/course/courseDetails.dart';
-import 'package:shamssgazaa/main.dart';
-import 'package:shamssgazaa/model/book_list.dart';
-import 'package:shamssgazaa/pref/shared_pref_controller.dart';
-import 'package:shamssgazaa/utils/helpers.dart';
+import 'package:hankammeleducation/api/controllers/api_controller.dart';
+import 'package:hankammeleducation/course/announcements.dart';
+import 'package:hankammeleducation/course/courseDetails.dart';
+import 'package:hankammeleducation/main.dart';
+import 'package:hankammeleducation/model/book_list.dart';
+import 'package:hankammeleducation/pref/shared_pref_controller.dart';
+import 'package:hankammeleducation/utils/helpers.dart';
 
 class CourseScreen extends StatefulWidget {
   CourseScreen(

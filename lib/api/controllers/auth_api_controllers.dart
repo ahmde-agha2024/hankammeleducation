@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:core';
-import 'package:shamssgazaa/api/api_helper.dart';
-import 'package:shamssgazaa/api/api_settings.dart';
-import 'package:shamssgazaa/model/api_response.dart';
-import 'package:shamssgazaa/model/login_user.dart';
-import 'package:shamssgazaa/model/register_user.dart';
+import 'package:hankammeleducation/api/api_helper.dart';
+import 'package:hankammeleducation/api/api_settings.dart';
+import 'package:hankammeleducation/model/api_response.dart';
+import 'package:hankammeleducation/model/login_user.dart';
+import 'package:hankammeleducation/model/register_user.dart';
 import 'package:http/http.dart' as http;
-import 'package:shamssgazaa/pref/shared_pref_controller.dart';
+import 'package:hankammeleducation/pref/shared_pref_controller.dart';
 
 class AuthApiController with ApiHelper {
   Future<ApiResponse> register(RegisterUser user) async {

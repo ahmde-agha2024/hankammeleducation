@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shamssgazaa/pref/shared_pref_controller.dart';
-import 'package:shamssgazaa/screens/auth_screens/login_screen.dart';
-import 'package:shamssgazaa/screens/bottomNavigationBar.dart';
-import 'package:shamssgazaa/utils/helpers.dart';
+import 'package:hankammeleducation/pref/shared_pref_controller.dart';
+import 'package:hankammeleducation/screens/auth_screens/login_screen.dart';
+import 'package:hankammeleducation/screens/bottomNavigationBar.dart';
+import 'package:hankammeleducation/utils/helpers.dart';
 
 class ConnectionStateScreen extends StatefulWidget {
   const ConnectionStateScreen({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shamssgazaa/api/controllers/auth_api_controllers.dart';
-import 'package:shamssgazaa/model/api_response.dart';
-import 'package:shamssgazaa/utils/helpers.dart';
+import 'package:hankammeleducation/api/controllers/auth_api_controllers.dart';
+import 'package:hankammeleducation/model/api_response.dart';
+import 'package:hankammeleducation/utils/helpers.dart';
 import 'register_screen.dart';
 import 'verifyPhone_screen.dart';
 

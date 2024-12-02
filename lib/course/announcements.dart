@@ -3,8 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shamssgazaa/api/controllers/api_controller.dart';
-import 'package:shamssgazaa/model/book_list.dart';
+import 'package:hankammeleducation/api/controllers/api_controller.dart';
+import 'package:hankammeleducation/model/book_list.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Announcements extends StatefulWidget {

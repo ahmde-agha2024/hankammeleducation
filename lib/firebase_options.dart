@@ -44,9 +44,9 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyDXooDUhaXYJak7kYWBR9DJAr475IS9IZ8',
     appId: '1:501181434655:web:5ed7c2ea290d3c27ccfe2a',
     messagingSenderId: '501181434655',
-    projectId: 'shamssgazaa',
-    authDomain: 'shamssgazaa.firebaseapp.com',
-    storageBucket: 'shamssgazaa.appspot.com',
+    projectId: 'hankammeleducation',
+    authDomain: 'hankammeleducation.firebaseapp.com',
+    storageBucket: 'hankammeleducation.appspot.com',
     measurementId: 'G-VT9KT70CW6',
   );
 
@@ -54,16 +54,16 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyDF4Ga2OXpH_NyX3Q8hEKXmJ_Vf--jDFLc',
     appId: '1:501181434655:android:9a4c3edc121238f9ccfe2a',
     messagingSenderId: '501181434655',
-    projectId: 'shamssgazaa',
-    storageBucket: 'shamssgazaa.appspot.com',
+    projectId: 'hankammeleducation',
+    storageBucket: 'hankammeleducation.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCgeZZeZjCbzmjkzcgMYtlsD_Lr2Lzwf7E',
     appId: '1:501181434655:ios:d4d4369bc0d66f07ccfe2a',
     messagingSenderId: '501181434655',
-    projectId: 'shamssgazaa',
-    storageBucket: 'shamssgazaa.appspot.com',
+    projectId: 'hankammeleducation',
+    storageBucket: 'hankammeleducation.appspot.com',
     iosBundleId: 'com.example.hankammelapp',
   );
 
@@ -71,8 +71,8 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyCgeZZeZjCbzmjkzcgMYtlsD_Lr2Lzwf7E',
     appId: '1:501181434655:ios:d4d4369bc0d66f07ccfe2a',
     messagingSenderId: '501181434655',
-    projectId: 'shamssgazaa',
-    storageBucket: 'shamssgazaa.appspot.com',
+    projectId: 'hankammeleducation',
+    storageBucket: 'hankammeleducation.appspot.com',
     iosBundleId: 'com.example.hankammelapp',
   );
 
@@ -80,9 +80,9 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyDXooDUhaXYJak7kYWBR9DJAr475IS9IZ8',
     appId: '1:501181434655:web:cb8e24a7ac9b567accfe2a',
     messagingSenderId: '501181434655',
-    projectId: 'shamssgazaa',
-    authDomain: 'shamssgazaa.firebaseapp.com',
-    storageBucket: 'shamssgazaa.appspot.com',
+    projectId: 'hankammeleducation',
+    authDomain: 'hankammeleducation.firebaseapp.com',
+    storageBucket: 'hankammeleducation.appspot.com',
     measurementId: 'G-KND4MG6TF5',
   );
 }

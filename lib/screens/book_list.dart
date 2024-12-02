@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shamssgazaa/api/controllers/api_controller.dart';
-import 'package:shamssgazaa/course/course.dart';
-import 'package:shamssgazaa/model/book_list.dart';
+import 'package:hankammeleducation/api/controllers/api_controller.dart';
+import 'package:hankammeleducation/course/course.dart';
+import 'package:hankammeleducation/model/book_list.dart';
 import 'package:shimmer/shimmer.dart';
 
 class BookList extends StatefulWidget {

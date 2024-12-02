@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:html/parser.dart';
-import 'package:shamssgazaa/api/controllers/api_controller.dart';
-import 'package:shamssgazaa/shimmer/shimmer_book_list.dart';
+import 'package:hankammeleducation/api/controllers/api_controller.dart';
+import 'package:hankammeleducation/shimmer/shimmer_book_list.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../model/privacypolicy.dart';

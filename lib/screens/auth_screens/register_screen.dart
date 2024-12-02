@@ -1,13 +1,13 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shamssgazaa/api/controllers/auth_api_controllers.dart';
-import 'package:shamssgazaa/model/api_response.dart';
-import 'package:shamssgazaa/model/register_user.dart';
-import 'package:shamssgazaa/pref/shared_pref_controller.dart';
-import 'package:shamssgazaa/screens/auth_screens/verifyPhone_screen.dart';
-import 'package:shamssgazaa/utils/helpers.dart';
-import 'package:shamssgazaa/widget/code_text_field.dart';
+import 'package:hankammeleducation/api/controllers/auth_api_controllers.dart';
+import 'package:hankammeleducation/model/api_response.dart';
+import 'package:hankammeleducation/model/register_user.dart';
+import 'package:hankammeleducation/pref/shared_pref_controller.dart';
+import 'package:hankammeleducation/screens/auth_screens/verifyPhone_screen.dart';
+import 'package:hankammeleducation/utils/helpers.dart';
+import 'package:hankammeleducation/widget/code_text_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override

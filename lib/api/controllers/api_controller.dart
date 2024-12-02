@@ -1,16 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:shamssgazaa/api/api_helper.dart';
-import 'package:shamssgazaa/api/api_settings.dart';
-import 'package:shamssgazaa/model/about.dart';
-import 'package:shamssgazaa/model/api_response.dart';
+import 'package:hankammeleducation/api/api_helper.dart';
+import 'package:hankammeleducation/api/api_settings.dart';
+import 'package:hankammeleducation/model/about.dart';
+import 'package:hankammeleducation/model/api_response.dart';
 import 'package:http/http.dart' as http;
-import 'package:shamssgazaa/model/book_list.dart';
-import 'package:shamssgazaa/model/home.dart';
-import 'package:shamssgazaa/model/privacypolicy.dart';
-import 'package:shamssgazaa/model/subcategory.dart';
-import 'package:shamssgazaa/pref/shared_pref_controller.dart';
+import 'package:hankammeleducation/model/book_list.dart';
+import 'package:hankammeleducation/model/home.dart';
+import 'package:hankammeleducation/model/privacypolicy.dart';
+import 'package:hankammeleducation/model/subcategory.dart';
+import 'package:hankammeleducation/pref/shared_pref_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiController with ApiHelper {

@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:shamssgazaa/api/controllers/api_controller.dart';
-import 'package:shamssgazaa/course/download.dart';
-import 'package:shamssgazaa/course/viemo.dart';
-import 'package:shamssgazaa/model/book_list.dart';
+import 'package:hankammeleducation/api/controllers/api_controller.dart';
+import 'package:hankammeleducation/course/download.dart';
+import 'package:hankammeleducation/course/viemo.dart';
+import 'package:hankammeleducation/model/book_list.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CourseDetails extends StatefulWidget {

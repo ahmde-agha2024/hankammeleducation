@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shamssgazaa/api/controllers/api_controller.dart';
-import 'package:shamssgazaa/pref/shared_pref_controller.dart';
-import 'package:shamssgazaa/screens/aboutscreen.dart';
-import 'package:shamssgazaa/screens/auth_screens/login_screen.dart';
-import 'package:shamssgazaa/screens/privacy_screen.dart';
-import 'package:shamssgazaa/screens/termsandconditions.dart';
+import 'package:hankammeleducation/api/controllers/api_controller.dart';
+import 'package:hankammeleducation/pref/shared_pref_controller.dart';
+import 'package:hankammeleducation/screens/aboutscreen.dart';
+import 'package:hankammeleducation/screens/auth_screens/login_screen.dart';
+import 'package:hankammeleducation/screens/privacy_screen.dart';
+import 'package:hankammeleducation/screens/termsandconditions.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shamssgazaa/widget/supportItem.dart';
+import 'package:hankammeleducation/widget/supportItem.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override

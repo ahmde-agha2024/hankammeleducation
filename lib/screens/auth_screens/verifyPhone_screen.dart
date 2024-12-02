@@ -3,11 +3,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shamssgazaa/api/controllers/auth_api_controllers.dart';
-import 'package:shamssgazaa/model/api_response.dart';
-import 'package:shamssgazaa/screens/bottomNavigationBar.dart';
-import 'package:shamssgazaa/utils/helpers.dart';
-import 'package:shamssgazaa/widget/code_text_field.dart';
+import 'package:hankammeleducation/api/controllers/auth_api_controllers.dart';
+import 'package:hankammeleducation/model/api_response.dart';
+import 'package:hankammeleducation/screens/bottomNavigationBar.dart';
+import 'package:hankammeleducation/utils/helpers.dart';
+import 'package:hankammeleducation/widget/code_text_field.dart';
 
 class VerifyPhone extends StatefulWidget {
   VerifyPhone({required this.phoneNumber, super.key});

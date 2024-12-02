@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:shamssgazaa/model/api_response.dart';
-import 'package:shamssgazaa/pref/shared_pref_controller.dart';
+import 'package:hankammeleducation/model/api_response.dart';
+import 'package:hankammeleducation/pref/shared_pref_controller.dart';
 
 mixin ApiHelper {
   ApiResponse get failedResponse => ApiResponse(

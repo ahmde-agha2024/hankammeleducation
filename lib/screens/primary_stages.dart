@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shamssgazaa/api/controllers/api_controller.dart';
-import 'package:shamssgazaa/model/subcategory.dart';
-import 'package:shamssgazaa/screens/book_list.dart';
+import 'package:hankammeleducation/api/controllers/api_controller.dart';
+import 'package:hankammeleducation/model/subcategory.dart';
+import 'package:hankammeleducation/screens/book_list.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PrimaryStages extends StatefulWidget {
