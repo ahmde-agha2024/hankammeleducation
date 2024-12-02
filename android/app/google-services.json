@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "501181434655",
+    "project_id": "shamssgazaa",
+    "storage_bucket": "shamssgazaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501181434655:android:9a4c3edc121238f9ccfe2a",
+        "android_client_info": {
+          "package_name": "com.example.hankammelapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF4Ga2OXpH_NyX3Q8hEKXmJ_Vf--jDFLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
