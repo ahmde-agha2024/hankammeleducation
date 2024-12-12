@@ -26,6 +26,7 @@ class ApiSettings {
   static const String completeLessons = '${_baseurl}curricula/:id';
 
   static const String submitAnswers = '${_baseurl}user-answers';
+  static const String addDeviceForNotification = '${_baseurl}notification-tokens';
 // static const String verification = '${_baseurl}auth/activate';
 // static const String forgetPassword = '${_baseurl}auth/forget-password';
 // static const String resetPassword = '${_baseurl}auth/reset-password';

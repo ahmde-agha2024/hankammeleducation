@@ -286,6 +286,30 @@ class ApiController with ApiHelper {
     }
     return ApiResponse(message: "", success: false);
   }
-
+  Future<ApiResponse> addDeviceNotification(
+      {required String tokenDevice,
+        required String deviceType,
+        required deviceName,
+        required String osVersion}) async {
+    Uri uri = Uri.parse(ApiSettings.addDeviceForNotification);
+    var response = await http.post(uri,
+        headers: {
+          HttpHeaders.authorizationHeader: SharedPrefController().token,
+          HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
+        },
+        body: json.encode({
+          "data": {
+            "token_id": tokenDevice,
+            "device_type": deviceType,
+            "device_name": deviceName,
+            "os_version": osVersion
+          }
+        }));
+print(response.body);
+    if (response.statusCode == 201) {
+      return ApiResponse(message: "", success: true);
+    }
+    return ApiResponse(message: "", success: false);
+  }
 
 }

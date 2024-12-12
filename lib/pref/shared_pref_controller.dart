@@ -10,7 +10,8 @@ enum PrefKeys {
   gender,
   phoneNumber,
   listCategory,
-  docIdUser
+  docIdUser,
+  notificationSaveDeviceInfo
 }
 
 class SharedPrefController {
@@ -49,6 +50,9 @@ class SharedPrefController {
   bool get loggedIn =>
       _sharedPreferences.getBool(PrefKeys.isLoggedIn.name) ?? false;
 
+  bool get deviceInfo =>
+      _sharedPreferences.getBool(PrefKeys.notificationSaveDeviceInfo.name) ?? false;
+
   T? getByKey<T>({required String key}) {
     if (_sharedPreferences.containsKey(key)) {
       return _sharedPreferences.get(key) as T;
@@ -69,4 +73,7 @@ class SharedPrefController {
 
   List<String> get listAllCategot =>
       _sharedPreferences.getStringList(PrefKeys.listCategory.name) ?? [];
+  Future<void> notificationSaveInfo() async {
+    await _sharedPreferences.setBool(PrefKeys.notificationSaveDeviceInfo.name, true);
+  }
 }

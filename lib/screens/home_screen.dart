@@ -7,6 +7,9 @@ import 'package:hankammeleducation/api/controllers/api_controller.dart';
 import 'package:hankammeleducation/model/home.dart';
 import 'package:hankammeleducation/pref/shared_pref_controller.dart';
 import 'package:hankammeleducation/search/search.dart';
+import 'package:hankammeleducation/service/firebase_notification_service.dart';
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -27,6 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _statusSearch = false;
   bool isConnected = false;
   late Future<List<HomeModel>> _future;
+  int notificationCount = 0;
+  bool isPopupOpened = false; // حالة التحقق من فتح الـ popup
 
   void _performSearch() async {
     final grade = _gradeController.text.trim();
@@ -84,11 +89,115 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     checkInternetConnection();
     super.initState();
+    updateNotificationCount();
     _future = ApiController().getHome();
+    _loadNotificationCount();
+  }
+  Future<void> _loadNotificationCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      notificationCount = prefs.getInt('notificationCount') ?? 0;
+    });
+  }
+
+  Future<void> _saveNotificationCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('notificationCount', notificationCount);
+  }
+
+  void updateNotificationCount() {
+    setState(() {
+      notificationCount = FirebaseNotificationService.getNotificationCount();
+    });
+  }
+
+  void refreshNotifications() {
+    setState(() {
+      notificationCount = FirebaseNotificationService.getNotificationCount();
+    });
+  }
+
+  Future<void> showNotificationsPopup(BuildContext context) async {
+    final box = await Hive.openBox('notifications');
+    final notifications = box.values.toList();
+    // تأكد من إخفاء العلامة فقط عند عرض الـ popup
+    if (!isPopupOpened && notificationCount > 0) {
+      setState(() {
+        isPopupOpened = true; // تغيير الحالة إلى مفتوحة
+        notificationCount = 0; // إخفاء العلامة مؤقتيًا
+      });
+      await _saveNotificationCount();
+    }
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14), // تحكم في الزوايا
+          ),
+          child: SizedBox(
+            height: 500, // تحديد الارتفاع المناسب للـ popup
+            child: notifications.isEmpty
+                ? Center(
+                    child: Text(
+                      'لا توجد إشعارات',
+                      style: GoogleFonts.cairo(),
+                    ),
+                  )
+                : Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'الإشعارات',
+                        style: GoogleFonts.cairo(fontSize: 10),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: notifications.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                color: Colors.white,
+                                child: ListTile(
+                                  title: Text(
+                                    notifications.elementAt(index)['title'] ??
+                                        '',
+                                    style: GoogleFonts.cairo(fontSize: 10),
+                                  ),
+                                  subtitle: Text(
+                                    notifications.elementAt(index)['body'] ??
+                                        '',
+                                    style: GoogleFonts.cairo(fontSize: 9),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+          ),
+        );
+      },
+    ).then((_) {
+      // بعد إغلاق الـ popup
+      setState(() {
+        isPopupOpened = false; // إعادة الحالة عند إغلاق الـ popup
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -103,11 +212,13 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () {},
+                  onPressed: () => showNotificationsPopup(context),
                   icon: Image.asset(
                     width: 35,
                     height: 35,
-                    'images/notificationcomplete 1.png',
+                    notificationCount > 0
+                        ? 'images/notificationcomplete 1.png'
+                        : 'images/notificationcomplete.png',
                   )),
               IconButton(
                   padding: EdgeInsets.zero,
