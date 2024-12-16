@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:html/parser.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
-import 'package:hankammeleducation/shimmer/shimmer_book_list.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../model/privacypolicy.dart';
@@ -16,7 +17,7 @@ class PrivacyScreen extends StatefulWidget {
 }
 
 class _PrivacyScreenState extends State<PrivacyScreen> {
-
+  bool isConnected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 40),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 40.h),
           child: Directionality(
             textDirection: TextDirection.ltr,
             child: FutureBuilder<DataResponse>(
@@ -35,20 +36,20 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                       baseColor: Colors.grey[300]!,
                       highlightColor: Colors.grey[100]!,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding: EdgeInsets.symmetric(vertical: 8.0.h),
                         child: Container(
-                          height: 800,
+                          height: 800.h,
                           decoration: BoxDecoration(
                             color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(8.0.r),
                           ),
                           child: Row(
                             children: [
                               // أيقونة القفل
                               Padding(
-                                padding: const EdgeInsets.all(16.0),
+                                padding: EdgeInsets.all(16.0.r),
                                 child: Icon(Icons.lock,
-                                    color: Colors.grey[400], size: 30),
+                                    color: Colors.grey[400], size: 30.w),
                               ),
                               // النصوص (العنوان والتفاصيل)
                               Column(
@@ -56,14 +57,14 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    width: 150,
-                                    height: 16,
+                                    width: 150.w,
+                                    height: 16.h,
                                     color: Colors.grey[300],
                                   ),
-                                  SizedBox(height: 8),
+                                  SizedBox(height: 8.h),
                                   Container(
-                                    width: 100,
-                                    height: 12,
+                                    width: 100.w,
+                                    height: 12.h,
                                     color: Colors.grey[300],
                                   ),
                                 ],
@@ -73,7 +74,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                         ),
                       ),
                     );
-                  } else if (snapshot.hasData) {
+                  } else if (isConnected && snapshot.hasData) {
                     return HtmlWidget(
                       snapshot.data!.content
                       // onErrorBuilder: (context, element, error) =>
@@ -84,20 +85,20 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                         baseColor: Colors.grey[300]!,
                         highlightColor: Colors.grey[100]!,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          padding: EdgeInsets.symmetric(vertical: 8.0.h),
                           child: Container(
-                            height: 800,
+                            height: 800.h,
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(8.0),
+                              borderRadius: BorderRadius.circular(8.0.r),
                             ),
                             child: Row(
                               children: [
                                 // أيقونة القفل
                                 Padding(
-                                  padding: const EdgeInsets.all(16.0),
+                                  padding: EdgeInsets.all(16.0.r),
                                   child: Icon(Icons.lock,
-                                      color: Colors.grey[400], size: 30),
+                                      color: Colors.grey[400], size: 30.w),
                                 ),
                                 // النصوص (العنوان والتفاصيل)
                                 Column(
@@ -105,14 +106,14 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      width: 150,
-                                      height: 16,
+                                      width: 150.w,
+                                      height: 16.h,
                                       color: Colors.grey[300],
                                     ),
-                                    SizedBox(height: 8),
+                                    SizedBox(height: 8.h),
                                     Container(
-                                      width: 100,
-                                      height: 12,
+                                      width: 100.w,
+                                      height: 12.h,
                                       color: Colors.grey[300],
                                     ),
                                   ],
@@ -129,7 +130,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                       child: Text(
                         "لا يوجد بيانات",
                         style: GoogleFonts.cairo(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                            fontSize: 14.sp, fontWeight: FontWeight.bold),
                       ),
                     );
                   }
@@ -138,5 +139,18 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> checkInternetConnection() async {
+    final result = await InternetAddress.lookup('example.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      setState(() {
+        isConnected = true;
+      });
+    } else {
+      setState(() {
+        isConnected = false;
+      });
+    }
   }
 }

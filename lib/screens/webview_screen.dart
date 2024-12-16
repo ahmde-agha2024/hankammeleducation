@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 
 class WebViewXPlusScreen extends StatelessWidget {
-   WebViewXPlusScreen({required this.title, required this.url, super.key});
+  WebViewXPlusScreen({required this.title, required this.url, super.key});
 
   String title;
   String url;
@@ -19,7 +20,7 @@ class WebViewXPlusScreen extends StatelessWidget {
         title: Text(
           title,
           style: GoogleFonts.cairo(
-              fontSize: 10,
+              fontSize: 10.sp,
               fontWeight: FontWeight.w500,
               color: const Color(0xff262E4A)),
         ),
@@ -28,15 +29,9 @@ class WebViewXPlusScreen extends StatelessWidget {
         initialContent: url,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        onWebViewCreated: (controller) {
-          print("WebView Created");
-        },
-        onPageStarted: (url) {
-          print("بدأ تحميل الصفحة: $url");
-        },
-        onPageFinished: (url) {
-          print("الصفحة تم تحميلها: $url");
-        },
+        onWebViewCreated: (controller) {},
+        onPageStarted: (url) {},
+        onPageFinished: (url) {},
       ),
     );
   }

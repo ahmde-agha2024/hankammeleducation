@@ -2,19 +2,14 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hankammeleducation/notification/fb_notifications.dart';
-import 'package:hankammeleducation/notification/notification.dart';
 import 'package:hankammeleducation/screens/launchscreen.dart';
-import 'package:hankammeleducation/search/search.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hankammeleducation/screens/connectionstate.dart';
 import 'pref/shared_pref_controller.dart';
-import 'screens/quiz/quiz_screen.dart';
-import 'screens/webview_screen.dart';
 import 'service/firebase_notification_service.dart';
 
 bool isConnected = false;
@@ -26,8 +21,6 @@ void main() async {
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.requestPermission();
   await FbNotifications.initNotifications();
-
-
   await Hive.initFlutter(); // تهيئة Hive
   await Hive.openBox('downloads'); // فتح صندوق التحميلات
   await Hive.openBox('notifications');
@@ -35,6 +28,7 @@ void main() async {
   setupFirebaseMessaging();
   runApp(MyApp());
 }
+
 void setupFirebaseMessaging() {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print('Foreground notification received: ${message.notification?.title}');
@@ -67,8 +61,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(1080, 2340),
+      designSize: const Size(360, 780), // db
       minTextAdapt: true,
+      splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -86,7 +81,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
             ),
             home: isConnected
-                ? LaunchScreen()
+                ? const LaunchScreen()
                 : const ConnectionStateScreen());
       },
     );

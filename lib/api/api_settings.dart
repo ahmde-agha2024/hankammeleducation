@@ -21,30 +21,10 @@ class ApiSettings {
   static const String getAllQuizzes =
       '${_baseurl}quizzes?{filters[course][documentId][\$eq]=}&{populate[questions][populate]=*}';
 
-  static const String search =
-      '${_baseurl}/courses?{filters[sub_category][\$eq]=}&{filters[title][\$contains]=}';
+  static const String search = '${_baseurl}courses?{filters[sub_category][\$eq]=}&{filters[title][\$contains]=}';
   static const String completeLessons = '${_baseurl}curricula/:id';
 
   static const String submitAnswers = '${_baseurl}user-answers';
   static const String addDeviceForNotification = '${_baseurl}notification-tokens';
-// static const String verification = '${_baseurl}auth/activate';
-// static const String forgetPassword = '${_baseurl}auth/forget-password';
-// static const String resetPassword = '${_baseurl}auth/reset-password';
-// static const String resetCurrentPassword = '${_baseurl}auth/change-password';
-// static const String login = '${_baseurl}auth/login';
-// static const String logout = '${_baseurl}auth/logout';
-// static const String home = '${_baseurl}home';
-// static const String categories = '${_baseurl}categories';
-// static const String subCategories = '${_baseurl}categories/{id}';
-// static const String product = '${_baseurl}sub-categories/{id}';
-// static const String productDetails = '${_baseurl}products/{id}';
-// static const String productRate = '${_baseurl}products/rate';
-// static const String productFavorite = '${_baseurl}favorite-products';
-// static const String AddressRead = '${_baseurl}addresses/{id}';
-// static const String cities = '${_baseurl}cities';
-// static const String contactUs = '${_baseurl}contact-requests';
-// static const String orders = '${_baseurl}orders/{id}';
-// static const String faqs = '${_baseurl}faqs';
-// static const String offer = '${_baseurl}offers';
-// static const String payment = '${_baseurl}payment-cards/{id}';
+  static const String faq = '${_baseurl}faqs';
 }

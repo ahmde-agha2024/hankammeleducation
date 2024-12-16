@@ -5,7 +5,9 @@ import 'package:hankammeleducation/api/api_helper.dart';
 import 'package:hankammeleducation/api/api_settings.dart';
 import 'package:hankammeleducation/model/about.dart';
 import 'package:hankammeleducation/model/api_response.dart';
+import 'package:hankammeleducation/model/faqs.dart';
 import 'package:hankammeleducation/model/quiz.dart';
+import 'package:hankammeleducation/screens/faqs.dart';
 import 'package:http/http.dart' as http;
 import 'package:hankammeleducation/model/book_list.dart';
 import 'package:hankammeleducation/model/home.dart';
@@ -212,7 +214,6 @@ class ApiController with ApiHelper {
         .replaceFirst('{populate[questions][populate]=*}',
             'populate[questions][populate]=*'));
     var response = await http.get(uri);
-    print(response.body);
     var jsonResponse = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
@@ -286,11 +287,12 @@ class ApiController with ApiHelper {
     }
     return ApiResponse(message: "", success: false);
   }
+
   Future<ApiResponse> addDeviceNotification(
       {required String tokenDevice,
-        required String deviceType,
-        required deviceName,
-        required String osVersion}) async {
+      required String deviceType,
+      required deviceName,
+      required String osVersion}) async {
     Uri uri = Uri.parse(ApiSettings.addDeviceForNotification);
     var response = await http.post(uri,
         headers: {
@@ -305,11 +307,22 @@ class ApiController with ApiHelper {
             "os_version": osVersion
           }
         }));
-print(response.body);
     if (response.statusCode == 201) {
       return ApiResponse(message: "", success: true);
     }
     return ApiResponse(message: "", success: false);
   }
 
+  Future<List<FAQ>> getFaqs() async {
+    Uri uri = Uri.parse(ApiSettings.faq);
+    var response = await http.get(uri);
+    var jsonResponse = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      var data = jsonResponse['data'] as List;
+      return data.map((jsonObject) => FAQ.fromJson(jsonObject)).toList();
+    } else {
+      return [];
+    }
+  }
 }

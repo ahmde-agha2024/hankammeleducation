@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
 import 'package:hankammeleducation/pref/shared_pref_controller.dart';
 import 'package:hankammeleducation/screens/aboutscreen.dart';
 import 'package:hankammeleducation/screens/auth_screens/login_screen.dart';
+import 'package:hankammeleducation/screens/faqs.dart';
 import 'package:hankammeleducation/screens/privacy_screen.dart';
 import 'package:hankammeleducation/screens/termsandconditions.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Text(
             "الصفحة الشخصية",
             style: GoogleFonts.cairo(
-                fontWeight: FontWeight.bold, fontSize: 10, color: Colors.teal),
+                fontWeight: FontWeight.bold, fontSize: 10.sp, color: Colors.teal),
           ),
         ),
         backgroundColor: Colors.white,
@@ -33,18 +35,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(0),
+          borderRadius: BorderRadius.circular(0.r),
           color: Colors.white,
         ),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding:  EdgeInsets.only(left: 10.w, right: 10.w),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey, width: 0.3),
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(color: Colors.grey, width: 0.3.w),
                 ),
                 child: ListView(
                   shrinkWrap: true,
@@ -56,21 +58,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AboutScreen()));
+                                builder: (context) => const AboutScreen()));
                       },
                     ),
                     SupportItem(
                       icon: Icons.help_outline,
                       title: 'الأسئلة الأكثر شيوعاً',
                       onTap: () {
-                        print("Hello");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FaqsScreen()));
                       },
                     ),
-
-                    // SupportItem(
-                    //   icon: Icons.share_outlined,
-                    //   title: 'Share this App',
-                    // ),
                     SupportItem(
                       icon: Icons.format_list_numbered_rtl_rounded,
                       title: 'سياسة الخصوصية',
@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PrivacyScreen()));
+                                builder: (context) => const PrivacyScreen()));
                       },
                     ),
                     SupportItem(
@@ -88,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => TermsAndConditions()));
+                                builder: (context) => const TermsAndConditions()));
                       },
                     ),
                     SharedPrefController()
@@ -108,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             SharedPrefController().getByKey(key: PrefKeys.isLoggedIn.name) ==
                     null
-                ? SizedBox()
+                ? const SizedBox()
                 : TextButton(
                     onPressed: () async {
                       await SharedPrefController().logout();
@@ -122,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       'تسجيل الخروج',
                       style: GoogleFonts.cairo(
                         color: Colors.teal,
-                        fontSize: 9,
+                        fontSize: 9.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -142,12 +142,12 @@ void _showConfirmationDialog(BuildContext context) {
         title: Text(
           textAlign: TextAlign.center,
           'إغلاق الحساب',
-          style: GoogleFonts.cairo(fontSize: 10, fontWeight: FontWeight.bold),
+          style: GoogleFonts.cairo(fontSize: 11.sp, fontWeight: FontWeight.bold,color: Colors.grey[700],),
         ),
         content: Text(
           textAlign: TextAlign.center,
           'هل أنت متأكد أنك تريد إغلاق الحساب نهائياً ؟',
-          style: GoogleFonts.cairo(fontSize: 10, fontWeight: FontWeight.w600),
+          style: GoogleFonts.cairo(fontSize: 10.sp, fontWeight: FontWeight.w700),
         ),
         actions: [
           ElevatedButton(
@@ -157,7 +157,7 @@ void _showConfirmationDialog(BuildContext context) {
             child: Text(
               'لا',
               style: GoogleFonts.cairo(
-                  fontSize: 12,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w700,
                   color: Colors.black),
             ),
@@ -169,7 +169,7 @@ void _showConfirmationDialog(BuildContext context) {
             child: Text(
               'نعم',
               style: GoogleFonts.cairo(
-                  fontSize: 10, fontWeight: FontWeight.w700, color: Colors.red),
+                  fontSize: 10.sp, fontWeight: FontWeight.w700, color: Colors.red),
             ),
           ),
         ],

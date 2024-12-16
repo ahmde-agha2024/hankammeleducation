@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
@@ -14,13 +17,19 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends State<AboutScreen> {
+  bool isConnected = false;
+  @override
+  void initState() {
+    checkInternetConnection();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 40),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 40.h),
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: FutureBuilder<DataResponseAbout>(
@@ -31,20 +40,20 @@ class _AboutScreenState extends State<AboutScreen> {
                       baseColor: Colors.grey[300]!,
                       highlightColor: Colors.grey[100]!,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding:  EdgeInsets.symmetric(vertical: 8.0.h),
                         child: Container(
-                          height: 800,
+                          height: 800.h,
                           decoration: BoxDecoration(
                             color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(8.0.r),
                           ),
                           child: Row(
                             children: [
                               // أيقونة القفل
                               Padding(
-                                padding: const EdgeInsets.all(16.0),
+                                padding:  EdgeInsets.all(16.0.r),
                                 child: Icon(Icons.lock,
-                                    color: Colors.grey[400], size: 30),
+                                    color: Colors.grey[400], size: 30.w),
                               ),
                               // النصوص (العنوان والتفاصيل)
                               Column(
@@ -52,14 +61,14 @@ class _AboutScreenState extends State<AboutScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    width: 150,
-                                    height: 16,
+                                    width: 150.w,
+                                    height: 16.h,
                                     color: Colors.grey[300],
                                   ),
-                                  SizedBox(height: 8),
+                                  SizedBox(height: 8.h),
                                   Container(
-                                    width: 100,
-                                    height: 12,
+                                    width: 100.w,
+                                    height: 12.h,
                                     color: Colors.grey[300],
                                   ),
                                 ],
@@ -69,7 +78,7 @@ class _AboutScreenState extends State<AboutScreen> {
                         ),
                       ),
                     );
-                  } else if (snapshot.hasData) {
+                  } else if (isConnected && snapshot.hasData) {
                     return HtmlWidget(
                       snapshot.data!.aboutapp
                       // onErrorBuilder: (context, element, error) =>
@@ -80,20 +89,20 @@ class _AboutScreenState extends State<AboutScreen> {
                             baseColor: Colors.grey[300]!,
                             highlightColor: Colors.grey[100]!,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              padding:  EdgeInsets.symmetric(vertical: 8.0.h),
                               child: Container(
-                                height: 800,
+                                height: 800.h,
                                 decoration: BoxDecoration(
                                   color: Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(8.0.r),
                                 ),
                                 child: Row(
                                   children: [
                                     // أيقونة القفل
                                     Padding(
-                                      padding: const EdgeInsets.all(16.0),
+                                      padding:  EdgeInsets.all(16.0.r),
                                       child: Icon(Icons.lock,
-                                          color: Colors.grey[400], size: 30),
+                                          color: Colors.grey[400], size: 300.w),
                                     ),
                                     // النصوص (العنوان والتفاصيل)
                                     Column(
@@ -101,14 +110,14 @@ class _AboutScreenState extends State<AboutScreen> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Container(
-                                          width: 150,
-                                          height: 16,
+                                          width: 150.w,
+                                          height: 16.h,
                                           color: Colors.grey[300],
                                         ),
-                                        SizedBox(height: 8),
+                                        SizedBox(height: 8.h),
                                         Container(
-                                          width: 100,
-                                          height: 12,
+                                          width: 100.w,
+                                          height: 12.h,
                                           color: Colors.grey[300],
                                         ),
                                       ],
@@ -123,9 +132,9 @@ class _AboutScreenState extends State<AboutScreen> {
                   } else {
                     return Center(
                       child: Text(
-                       snapshot.error.toString(),
+                       "لا يوجد بيانات",
                         style: GoogleFonts.cairo(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                            fontSize: 14.sp, fontWeight: FontWeight.bold),
                       ),
                     );
                   }
@@ -134,5 +143,17 @@ class _AboutScreenState extends State<AboutScreen> {
         ),
       ),
     );
+  }
+  Future<void> checkInternetConnection() async {
+    final result = await InternetAddress.lookup('example.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      setState(() {
+        isConnected = true;
+      });
+    } else {
+      setState(() {
+        isConnected = false;
+      });
+    }
   }
 }

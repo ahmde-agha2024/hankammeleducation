@@ -32,7 +32,7 @@ class _PdfViewState extends State<PdfView> with Helpers {
         title: Text(
           widget.title,
           style: GoogleFonts.cairo(
-              fontSize: 10,
+              fontSize: 10.sp,
               fontWeight: FontWeight.w500,
               color: const Color(0xff262E4A)),
         ),

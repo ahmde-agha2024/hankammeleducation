@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
 import 'package:hankammeleducation/model/subcategory.dart';
@@ -33,12 +34,12 @@ class _PrimaryStagesState extends State<PrimaryStages> {
         centerTitle: true,
         title: Text(widget.title,
             style: GoogleFonts.cairo(
-                color: Color(0xff073b4c),
-                fontSize: 12,
+                color: const Color(0xff073b4c),
+                fontSize: 12.sp,
                 fontWeight: FontWeight.bold)),
       ),
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+          padding:  EdgeInsets.symmetric(horizontal: 16.w, vertical: 40.h),
           child: FutureBuilder<List<SubCategoryModel>>(
               future: ApiController()
                   .getSubCategory(categoryEqual: widget.id, populate: '*'),
@@ -48,50 +49,50 @@ class _PrimaryStagesState extends State<PrimaryStages> {
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 10),
+                      padding:  EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 10.h),
                       child: GridView(
                         gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                             SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
-                          crossAxisSpacing: 5.0,
-                          mainAxisSpacing: 5.0,
+                          crossAxisSpacing: 5.0.w,
+                          mainAxisSpacing: 5.0.h,
                         ),
                         children: [
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(16.0),
+                              borderRadius: BorderRadius.circular(16.0.r),
                             ),
                           ),
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(16.0),
+                              borderRadius: BorderRadius.circular(16.0.r),
                             ),
                           ),
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(16.0),
+                              borderRadius: BorderRadius.circular(16.0.r),
                             ),
                           ),
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(16.0),
+                              borderRadius: BorderRadius.circular(16.0.r),
                             ),
                           ),
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(16.0),
+                              borderRadius: BorderRadius.circular(16.0.r),
                             ),
                           ),
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(16.0),
+                              borderRadius: BorderRadius.circular(16.0.r),
                             ),
                           ),
                         ],
@@ -99,13 +100,12 @@ class _PrimaryStagesState extends State<PrimaryStages> {
                     ),
                   );
                 } else if (isConnected &&
-                    snapshot.data!.isNotEmpty &&
                     snapshot.hasData) {
                   return GridView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        color: Color(0xff073b4c),
+                        color: const Color(0xff073b4c),
                         child: ListTile(
                           contentPadding: EdgeInsets.zero,
                           title: Align(
@@ -114,7 +114,7 @@ class _PrimaryStagesState extends State<PrimaryStages> {
                                 style: GoogleFonts.cairo(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
-                                    fontSize: 10)),
+                                    fontSize: 10.sp)),
                           ),
                           onTap: () {
                             Navigator.push(
@@ -131,10 +131,10 @@ class _PrimaryStagesState extends State<PrimaryStages> {
                       );
                     },
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                         SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
-                      crossAxisSpacing: 1.0,
-                      mainAxisSpacing: 2.0,
+                      crossAxisSpacing: 1.0.w,
+                      mainAxisSpacing: 2.0.h,
                     ),
                   );
                 } else {
@@ -142,7 +142,7 @@ class _PrimaryStagesState extends State<PrimaryStages> {
                     child: Text(
                       "لا يوجد بيانات",
                       style: GoogleFonts.cairo(
-                          fontSize: 14, fontWeight: FontWeight.bold),
+                          fontSize: 14.sp, fontWeight: FontWeight.bold),
                     ),
                   );
                 }

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
 import 'package:hankammeleducation/model/quiz.dart';
@@ -6,8 +9,7 @@ import 'package:hankammeleducation/utils/helpers.dart';
 import 'package:shimmer/shimmer.dart';
 
 class QuizScreen extends StatefulWidget {
-  QuizScreen({required this.docId, required this.id, Key? key})
-      : super(key: key);
+  QuizScreen({required this.docId, required this.id, super.key});
   String docId;
   int id;
 
@@ -21,9 +23,10 @@ class _QuizScreenState extends State<QuizScreen> with Helpers {
   List<String> _selectedOptionsUUID = []; // حفظ الاختيارات المتعددة
   bool _showAnswers = false;
   late Future<List<QuizRoot>> _future;
-
+  bool isConnected = false;
   @override
   void initState() {
+    checkInternetConnection();
     super.initState();
     _future = ApiController().getAllQuizzes(docId: widget.docId);
   }
@@ -57,7 +60,9 @@ class _QuizScreenState extends State<QuizScreen> with Helpers {
         title: Text(
           'إختبر معلوماتك',
           style: GoogleFonts.cairo(
-              color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),
+              color: Colors.black,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.bold),
         ),
       ),
       body: FutureBuilder<List<QuizRoot>>(
@@ -66,13 +71,11 @@ class _QuizScreenState extends State<QuizScreen> with Helpers {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: _buildShimmer());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error'));
+            return const Center(child: Text('Error'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('No questions available.'));
-          } else if (snapshot.hasData &&
-              snapshot.data![widget.id].questions.isNotEmpty) {
-            print(snapshot.data![widget.id].questions[_currentQuestionIndex]
-                .questionTitle);
+          } else if (isConnected && snapshot.hasData) {
+
             final questionType = snapshot.data![widget.id]
                 .questions[_currentQuestionIndex].questionTitle;
 
@@ -80,25 +83,25 @@ class _QuizScreenState extends State<QuizScreen> with Helpers {
             // تحديد النوع
 
             return Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     'السؤال ${_currentQuestionIndex + 1}/${snapshot.data![widget.id].questions.length}',
                     style: GoogleFonts.cairo(
-                        fontWeight: FontWeight.bold, fontSize: 10),
+                        fontWeight: FontWeight.bold, fontSize: 10.sp),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   Text(
                     snapshot.data![widget.id].questions[_currentQuestionIndex]
                         .questionTitle,
                     style: GoogleFonts.cairo(
-                        fontWeight: FontWeight.bold, fontSize: 14),
+                        fontWeight: FontWeight.bold, fontSize: 14.sp),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   Column(
                     children: questionType == 'select one'
                         ? _buildRadioOptions(snapshot
@@ -129,27 +132,27 @@ class _QuizScreenState extends State<QuizScreen> with Helpers {
                         });
                       }
                     },
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
+                        minimumSize:  Size(double.infinity.w, 40.h),
+                        elevation: 0,
+                        textStyle: GoogleFonts.cairo(),
+                        backgroundColor: const Color(0xff073b4c)),
                     child: Text(
                       _showAnswers ? "التالي" : "إكتشف الإجابة",
                       style: GoogleFonts.cairo(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 10),
+                          fontSize: 10.sp),
                     ),
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        minimumSize: const Size(double.infinity, 40),
-                        elevation: 0,
-                        textStyle: GoogleFonts.cairo(),
-                        backgroundColor: const Color(0xff073b4c)),
                   ),
                 ],
               ),
             );
           } else {
-            return Text("");
+            return const Text("");
           }
         },
       ),
@@ -173,7 +176,7 @@ class _QuizScreenState extends State<QuizScreen> with Helpers {
           contentPadding: EdgeInsets.zero,
           title: Text(
             option.title,
-            style: GoogleFonts.cairo(fontSize: 12, fontWeight: FontWeight.w600),
+            style: GoogleFonts.cairo(fontSize: 11.sp, fontWeight: FontWeight.w600),
           ),
           value: option.title,
           groupValue:
@@ -207,10 +210,10 @@ class _QuizScreenState extends State<QuizScreen> with Helpers {
         color: optionColor,
         child: CheckboxListTile(
           controlAffinity: ListTileControlAffinity.leading,
-          //contentPadding: EdgeInsets.zero,
           title: Text(
             option.title,
-            style: GoogleFonts.cairo(fontSize: 12, fontWeight: FontWeight.w600),
+            style:
+                GoogleFonts.cairo(fontSize: 11.sp, fontWeight: FontWeight.w600),
           ),
           value: _selectedOptions.contains(option.title),
           onChanged: (value) {
@@ -230,48 +233,60 @@ class _QuizScreenState extends State<QuizScreen> with Helpers {
       );
     }).toList();
   }
+  Future<void> checkInternetConnection() async {
+    final result = await InternetAddress.lookup('example.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      setState(() {
+        isConnected = true;
+      });
+    } else {
+      setState(() {
+        isConnected = false;
+      });
+    }
+  }
 }
 
 Widget _buildShimmer() {
   return Padding(
-    padding: const EdgeInsets.all(16.0),
+    padding: EdgeInsets.all(16.0.r),
     child: Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(
-          width: double.infinity,
-          height: 20.0,
+          width: double.infinity.w,
+          height: 20.0.h,
           color: Colors.white,
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h),
         Container(
-          width: double.infinity,
-          height: 20.0,
+          width: double.infinity.w,
+          height: 20.0.h,
           color: Colors.white,
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
         Container(
-          width: 50,
-          height: 20.0,
+          width: 50.w,
+          height: 20.0.h,
           color: Colors.white,
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h),
         Container(
-          width: 50,
-          height: 20.0,
+          width: 50.w,
+          height: 20.0.h,
           color: Colors.white,
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h),
         Container(
-          width: 50,
-          height: 20.0,
+          width: 50.w,
+          height: 20.0.h,
           color: Colors.white,
         ),
         const Spacer(),
         Container(
-          width: double.infinity,
-          height: 40.0,
+          width: double.infinity.w,
+          height: 40.0.h,
           color: Colors.white,
         ),
       ]),

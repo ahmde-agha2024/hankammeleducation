@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
 import 'package:hankammeleducation/api/controllers/auth_api_controllers.dart';
@@ -34,10 +37,12 @@ class _CourseScreenState extends State<CourseScreen>
     with SingleTickerProviderStateMixin, Helpers {
   late TabController _tabController;
   List<String> allCourses = [];
+  bool isConnected = false;
 
   @override
   void initState() {
     super.initState();
+    checkInternetConnection();
     _tabController = TabController(length: 2, vsync: this);
   }
 
@@ -57,37 +62,39 @@ class _CourseScreenState extends State<CourseScreen>
         title: Text(
           '${widget.title} | ${widget.grade}',
           style: GoogleFonts.cairo(
-              color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),
+              color: Colors.black,
+              fontSize: 11.sp,
+              fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
+            padding: EdgeInsets.symmetric(horizontal: 18.w),
             child: Align(
               alignment: Alignment.topRight,
               child: Text(
                 "المحتوى | ${widget.title}",
                 style: GoogleFonts.cairo(
                   fontWeight: FontWeight.bold,
-                  fontSize: 9,
+                  fontSize: 9.sp,
                 ),
               ),
             ),
           ),
           SizedBox(
-            height: 5,
+            height: 5.h,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
+            padding: EdgeInsets.symmetric(horizontal: 18.w),
             child: Align(
               alignment: Alignment.topRight,
               child: Text(
                 widget.description,
                 style: GoogleFonts.cairo(
                   fontWeight: FontWeight.bold,
-                  fontSize: 9,
+                  fontSize: 9.sp,
                 ),
               ),
             ),
@@ -96,46 +103,49 @@ class _CourseScreenState extends State<CourseScreen>
               future: ApiController().getAllCourses(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return SizedBox();
+                  return const SizedBox();
                 } else if (isConnected && snapshot.hasData) {
                   allCourses.clear();
                   for (BookListModel i in snapshot.data!) {
-                    allCourses.add(i.title!.toString());
+                    if(!allCourses.contains(i.title!.toString())){
+                      allCourses.add(i.title!.toString());
+                    }else{
+                      print(allCourses);
+                    }
+
                   }
 
-                  print(allCourses.toString());
-                  return SizedBox();
+                  return const SizedBox();
                 } else {
-                  return SizedBox();
+                  return const SizedBox();
                 }
               }),
           SizedBox(
-            height: 20,
+            height: 20.h,
           ),
           Container(
-            //padding: EdgeInsets.only(top: 20),
             color: Colors.white,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
               child: Container(
-                height: 40,
+                height: 40.h,
                 decoration: BoxDecoration(
                     color: const Color(0xffECECEC),
-                    borderRadius: BorderRadius.circular(8)),
+                    borderRadius: BorderRadius.circular(8.r)),
                 child: TabBar(
-                    onTap: (int tabindex) {
+                    onTap: (int tabIndex) {
                       setState(() {
-                        _tabController.index = tabindex;
+                        _tabController.index = tabIndex;
                       });
                     },
-                    labelColor: Color(0xff073b4c),
+                    labelColor: const Color(0xff073b4c),
                     dividerHeight: 0,
                     labelStyle: GoogleFonts.cairo(
-                        fontSize: 10, fontWeight: FontWeight.w700),
+                        fontSize: 10.sp, fontWeight: FontWeight.w700),
                     unselectedLabelColor: Colors.black54,
                     controller: _tabController,
                     indicatorColor: const Color(0xff144CDB),
-                    tabs: [
+                    tabs: const [
                       Tab(
                         text: "الفصول",
                       ),
@@ -147,7 +157,7 @@ class _CourseScreenState extends State<CourseScreen>
             ),
           ),
           SizedBox(
-            height: 40,
+            height: 40.h,
           ),
           Expanded(
             child: TabBarView(controller: _tabController, children: [
@@ -167,18 +177,11 @@ class _CourseScreenState extends State<CourseScreen>
           widget.enrolled
               ? const SizedBox()
               : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  padding: EdgeInsets.symmetric(horizontal: 18.w),
                   child: ElevatedButton(
                     onPressed: () async {
                       await _performEnrolled();
                     },
-                    child: Text(
-                      'سجل الآن',
-                      style: GoogleFonts.cairo(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10),
-                    ),
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -187,10 +190,17 @@ class _CourseScreenState extends State<CourseScreen>
                         elevation: 0,
                         textStyle: GoogleFonts.cairo(),
                         backgroundColor: Color(0xff073b4c)),
+                    child: Text(
+                      'سجل الآن',
+                      style: GoogleFonts.cairo(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10.sp),
+                    ),
                   ),
                 ),
           SizedBox(
-            height: 20,
+            height: 20.h,
           )
         ],
       ),
@@ -241,5 +251,18 @@ class _CourseScreenState extends State<CourseScreen>
     // setState(() {
     //   loading = false;
     // });
+  }
+
+  Future<void> checkInternetConnection() async {
+    final result = await InternetAddress.lookup('example.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      setState(() {
+        isConnected = true;
+      });
+    } else {
+      setState(() {
+        isConnected = false;
+      });
+    }
   }
 }

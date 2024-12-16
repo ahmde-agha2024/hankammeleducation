@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/model/quiz.dart';
 import 'package:hankammeleducation/pref/shared_pref_controller.dart';
@@ -65,7 +66,7 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -77,19 +78,19 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                       baseColor: Colors.grey[300]!,
                       highlightColor: Colors.grey[100]!,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 18),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 8.0.h, horizontal: 18.w),
                         child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: 20,
                             itemBuilder: (context, indexCourseDetails) {
                               return Padding(
-                                padding: const EdgeInsets.only(bottom: 5),
+                                padding: EdgeInsets.only(bottom: 5.h),
                                 child: Container(
-                                  height: 70,
+                                  height: 70.h,
                                   decoration: BoxDecoration(
                                     color: Colors.grey[300],
-                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderRadius: BorderRadius.circular(8.0.r),
                                   ),
                                 ),
                               );
@@ -101,7 +102,7 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                       children: [
                         ListView.builder(
                             shrinkWrap: true,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             itemCount: snapshot.data!.curriculum.length,
                             itemBuilder: (context, index) {
                               return Card(
@@ -109,28 +110,20 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                                 clipBehavior: Clip.antiAlias,
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(
-                                      width: 0.5, color: Colors.grey.shade300),
-                                  borderRadius: BorderRadius.circular(10),
+                                      width: 0.5.w,
+                                      color: Colors.grey.shade300),
+                                  borderRadius: BorderRadius.circular(10.r),
                                 ),
                                 child: ExpansionTile(
                                   tilePadding:
-                                      EdgeInsets.symmetric(horizontal: 10),
+                                      EdgeInsets.symmetric(horizontal: 10.w),
                                   leading: Icon(
                                     Icons.lock_open,
-                                    size: 18,
+                                    size: 18.w,
                                     color: Colors.grey,
                                   ),
-                                  // subtitle: Align(
-                                  //   alignment: Alignment.topRight,
-                                  //   child: Text(
-                                  //       ' عدد الدروس : 20 | المدة  05:25:15',
-                                  //       style: GoogleFonts.cairo(
-                                  //           fontWeight: FontWeight.w700,
-                                  //           fontSize: 8,
-                                  //           color: Colors.grey)),
-                                  // ),
                                   backgroundColor: Colors.white,
-                                  collapsedIconColor: Color(0xffef476f),
+                                  collapsedIconColor: const Color(0xffef476f),
                                   iconColor: const Color(0xffef476f),
                                   collapsedBackgroundColor: Colors.white,
                                   collapsedTextColor: Colors.white,
@@ -139,45 +132,25 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                                         .data!.curriculum[index].sectionName!,
                                     style: GoogleFonts.cairo(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 9,
+                                        fontSize: 9.sp,
                                         color: Colors.black),
                                   ),
                                   expandedAlignment: Alignment.topLeft,
-                                  childrenPadding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  textColor: Color(0xff073b4c),
+                                  childrenPadding:  EdgeInsets.symmetric(
+                                      horizontal: 10.w, vertical: 10.h),
+                                  textColor: const Color(0xff073b4c),
                                   initiallyExpanded: false,
-                                  trailing: Icon(
+                                  trailing: const Icon(
                                     Icons.keyboard_arrow_down_rounded,
                                     color: Color(0xff073b4c),
                                     // size: 14,
                                   ),
                                   children: [
-                                    // Align(
-                                    //   alignment: Alignment.topRight,
-                                    //   child: Text('عدد الدروس : 20',
-                                    //   child: Text('عدد الدروس : 20',
-                                    //       style: GoogleFonts.cairo(
-                                    //           fontWeight: FontWeight.w700,
-                                    //           fontSize: 8,
-                                    //           color: Colors.grey)),
-                                    // ),
-                                    // Align(
-                                    //   alignment: Alignment.topRight,
-                                    //   child: Text("المدة  05:25:15",
-                                    //       style: GoogleFonts.cairo(
-                                    //           fontWeight: FontWeight.w700,
-                                    //           fontSize: 8,
-                                    //           color: Colors.red)),
-                                    // ),
-                                    // SizedBox(
-                                    //   height: 10,
-                                    // ),
                                     SizedBox(
                                       height: snapshot.data!.curriculum[index]
                                                   .curricula.length >
-                                              6
-                                          ? 200
+                                              6.h
+                                          ? 200.h
                                           : null,
                                       child: ListView.builder(
                                         itemCount: snapshot.data!
@@ -199,18 +172,18 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                                                               .curricula[index1]
                                                               .type ==
                                                           "vimeo"
-                                                  ? Icon(
+                                                  ? const Icon(
                                                       Icons.play_circle,
                                                       color: Colors.black,
                                                     )
-                                                  : SizedBox(),
+                                                  : const SizedBox(),
                                               snapshot
                                                           .data!
                                                           .curriculum[index]
                                                           .curricula[index1]
                                                           .type ==
                                                       "pdf"
-                                                  ? Icon(
+                                                  ?const  Icon(
                                                       Icons.picture_as_pdf,
                                                       color: Colors.black,
                                                     )
@@ -225,9 +198,9 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                                                       Icons.extension,
                                                       color: Colors.black,
                                                     )
-                                                  : SizedBox(),
+                                                  : const SizedBox(),
                                               SizedBox(
-                                                width: 10,
+                                                width: 10.w,
                                               ),
                                               TextButton(
                                                 onPressed: () async {
@@ -349,12 +322,12 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                                                       .curricula[index1]
                                                       .title,
                                                   style: GoogleFonts.cairo(
-                                                      fontSize: 9,
+                                                      fontSize: 9.sp,
                                                       fontWeight:
                                                           FontWeight.w600),
                                                 ),
                                               ),
-                                              Spacer(),
+                                              const Spacer(),
                                               snapshot
                                                               .data!
                                                               .curriculum[index]
@@ -374,12 +347,12 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                                                           .curricula[index1]
                                                           .videoDuration,
                                                       style: GoogleFonts.cairo(
-                                                          fontSize: 8,
+                                                          fontSize: 8.sp,
                                                           color: Colors.green,
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     )
-                                                  : SizedBox(),
+                                                  : const SizedBox(),
                                               snapshot
                                                               .data!
                                                               .curriculum[index]
@@ -428,9 +401,9 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                                                       },
                                                       icon: Icon(
                                                         Icons.cloud_download,
-                                                        size: 18,
+                                                        size: 18.w,
                                                       ))
-                                                  : SizedBox()
+                                                  : const SizedBox()
                                             ],
                                           );
                                         },
@@ -441,9 +414,9 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                               );
                             }),
                         SizedBox(
-                          height: 10,
+                          height: 10.h,
                         ),
-                        Divider(
+                        const Divider(
                           thickness: 0.5,
                         ),
                         const SizedBox(
@@ -454,11 +427,11 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return SizedBox();
+                                return const SizedBox();
                               } else if (isConnected && snapshot.hasData) {
                                 return ListView.builder(
                                     shrinkWrap: true,
-                                    physics: BouncingScrollPhysics(),
+                                    physics: const BouncingScrollPhysics(),
                                     itemCount: snapshot.data!.length,
                                     itemBuilder: (context, quizIndex) {
                                       return Card(
@@ -467,21 +440,21 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                                         clipBehavior: Clip.antiAlias,
                                         shape: RoundedRectangleBorder(
                                           side: BorderSide(
-                                              width: 0.5,
+                                              width: 0.5.w,
                                               color: Colors.grey.shade300),
                                           borderRadius:
-                                              BorderRadius.circular(10),
+                                              BorderRadius.circular(10.r),
                                         ),
                                         child: ListTile(
                                           leading: Icon(
                                             Icons.quiz,
-                                            size: 18,
+                                            size: 18.w,
                                           ),
                                           title: Text(
                                             snapshot.data![quizIndex].name,
                                             style: GoogleFonts.cairo(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 10),
+                                                fontSize: 10.sp),
                                           ),
                                           onTap: () {
                                             Navigator.push(
@@ -492,8 +465,10 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                                                           docId:
                                                               widget.documentId,
                                                           id: snapshot
-                                                              .data![quizIndex]
-                                                              .id - 1,
+                                                                  .data![
+                                                                      quizIndex]
+                                                                  .id -
+                                                              1,
                                                         )));
                                           },
                                         ),
@@ -504,7 +479,7 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                                   child: Text(
                                     "لا يوجد بيانات",
                                     style: GoogleFonts.cairo(
-                                        fontSize: 14,
+                                        fontSize: 14.sp,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 );
@@ -517,7 +492,7 @@ class _MyCourseDetailsState extends State<MyCourseDetails> {
                       child: Text(
                         "لا يوجد بيانات",
                         style: GoogleFonts.cairo(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                            fontSize: 14.sp, fontWeight: FontWeight.bold),
                       ),
                     );
                   }

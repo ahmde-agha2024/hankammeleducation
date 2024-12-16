@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/auth_api_controllers.dart';
 import 'package:hankammeleducation/model/api_response.dart';
@@ -33,9 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
     _firstnamecontroller = TextEditingController();
     _familycontroller = TextEditingController();
     _mobilecontroller = TextEditingController();
-    print(SharedPrefController().token);
-    print("\n");
-    print(SharedPrefController().token);
+
   }
 
   @override
@@ -71,18 +70,18 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
             'تسجيل مستخدم جديد',
             style: GoogleFonts.cairo(
                 color: Color(0xff073b4c),
-                fontSize: 12,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.bold),
           )),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding:  EdgeInsets.all(16.0.r),
         child: SingleChildScrollView(
           child: Column(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 200,
-                width: 200,
+                height: 200.h,
+                width: 200.w,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
@@ -91,12 +90,12 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
+               SizedBox(
+                height: 10.h,
               ),
               SizedBox(
-                width: double.infinity,
-                height: 40,
+                width: double.infinity.w,
+                height: 40.h,
                 child: TextField(
                   controller: _firstnamecontroller,
                   onChanged: (value) {},
@@ -104,30 +103,30 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
                   textInputAction: TextInputAction.next,
                   //maxLength: 14,
                   style: GoogleFonts.cairo(
-                      fontSize: 8, fontWeight: FontWeight.bold),
+                      fontSize: 8.sp, fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
                       labelText: 'الإسم الأول',
                       //hintText: "أدخل رقم الهاتف مسبوقاً ب (00218)",
                       //hintStyle: GoogleFonts.cairo(fontSize: 8),
                       //counterText: "",
                       labelStyle:
-                          GoogleFonts.cairo(fontSize: 8, color: Colors.black54),
+                          GoogleFonts.cairo(fontSize: 8.sp, color: Colors.black54),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                           borderSide:
-                              BorderSide(width: 1, color: Color(0xffef476f))),
+                              BorderSide(width: 1.w, color: Color(0xffef476f))),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                           borderSide:
-                              BorderSide(width: 1, color: Color(0xffef476f)))),
+                              BorderSide(width: 1.w, color: Color(0xffef476f)))),
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
               SizedBox(
-                width: double.infinity,
-                height: 40,
+                width: double.infinity.w,
+                height: 40.h,
                 child: TextField(
                   controller: _familycontroller,
                   onChanged: (value) {},
@@ -136,55 +135,55 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
 
                   //maxLength: 14,
                   style: GoogleFonts.cairo(
-                      fontSize: 8, fontWeight: FontWeight.bold),
+                      fontSize: 8.sp, fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
                       labelText: 'اللقب',
                       //hintText: "أدخل رقم الهاتف مسبوقاً ب (00218)",
                       //hintStyle: GoogleFonts.cairo(fontSize: 8),
                       //counterText: "",
                       labelStyle:
-                          GoogleFonts.cairo(fontSize: 8, color: Colors.black54),
+                          GoogleFonts.cairo(fontSize: 8.sp, color: Colors.black54),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                           borderSide:
-                              BorderSide(width: 1, color: Color(0xffef476f))),
+                              BorderSide(width: 1.w, color: Color(0xffef476f))),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                           borderSide:
-                              BorderSide(width: 1, color: Color(0xffef476f)))),
+                              BorderSide(width: 1.w, color: Color(0xffef476f)))),
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
               SizedBox(
-                width: double.infinity,
-                height: 40,
+                width: double.infinity.w,
+                height: 40.h,
                 child: TextField(
                   controller: _mobilecontroller,
                   onChanged: (value) {},
                   keyboardType: TextInputType.phone,
                   maxLength: 14,
-                  style: GoogleFonts.cairo(fontSize: 8),
+                  style: GoogleFonts.cairo(fontSize: 8.sp),
                   decoration: InputDecoration(
                       labelText: 'رقم الموبايل',
                       hintText: "أدخل رقم الموبايل",
-                      hintStyle: GoogleFonts.cairo(fontSize: 8),
+                      hintStyle: GoogleFonts.cairo(fontSize: 8.sp),
                       counterText: "",
                       labelStyle:
-                          GoogleFonts.cairo(fontSize: 8, color: Colors.black54),
+                          GoogleFonts.cairo(fontSize: 8.sp, color: Colors.black54),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                           borderSide:
-                              BorderSide(width: 1, color: Color(0xffef476f))),
+                              BorderSide(width: 1.w, color: Color(0xffef476f))),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                           borderSide:
-                              BorderSide(width: 1, color: Color(0xffef476f)))),
+                              BorderSide(width: 1.w, color: Color(0xffef476f)))),
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
 
               // SizedBox(
@@ -215,8 +214,8 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
               //   ),
               // ),
               SizedBox(
-                width: double.infinity,
-                height: 40,
+                width: double.infinity.w,
+                height: 40.h,
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton2<String>(
                     isExpanded: true,
@@ -226,7 +225,7 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
                           child: Text(
                             'الجنس ؟',
                             style: GoogleFonts.cairo(
-                              fontSize: 9,
+                              fontSize: 9.sp,
                               color: Colors.black54,
                             ),
                           ),
@@ -239,7 +238,7 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
                               child: Text(
                                 item,
                                 style: GoogleFonts.cairo(
-                                  fontSize: 8,
+                                  fontSize: 8.sp,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xffef476f),
                                 ),
@@ -254,9 +253,9 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
                       });
                     },
                     buttonStyleData: ButtonStyleData(
-                      padding: const EdgeInsets.only(left: 14, right: 14),
+                      padding:  EdgeInsets.only(left: 14.w, right: 14.w),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         border: Border.all(
                           color: Color(0xffef476f),
                         ),
@@ -264,11 +263,11 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
                       ),
                       elevation: 2,
                     ),
-                    iconStyleData: const IconStyleData(
+                    iconStyleData:  IconStyleData(
                       icon: Icon(
                         Icons.arrow_forward_ios_outlined,
                       ),
-                      iconSize: 14,
+                      iconSize: 14.w,
                       iconEnabledColor: Colors.black54,
                       iconDisabledColor: Colors.black54,
                     ),
@@ -276,27 +275,27 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
                       //maxHeight: 200,
                       //width: double.infinity,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         color: Colors.white,
                       ),
                     ),
-                    menuItemStyleData: const MenuItemStyleData(
-                      height: 40,
-                      padding: EdgeInsets.only(left: 14, right: 14),
+                    menuItemStyleData:  MenuItemStyleData(
+                      height: 40.h,
+                      padding: EdgeInsets.only(left: 14.w, right: 14.w),
                     ),
                   ),
                 ),
               ),
 
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
               loading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
+                  ?  SizedBox(
+                      width: 20.w,
+                      height: 20.h,
                       child: CircularProgressIndicator(
-                        strokeWidth: 1.0,
+                        strokeWidth: 1.0.w,
                         color: Color(0xff073b4c),
                       ),
                     )
@@ -307,13 +306,13 @@ class _RegisterScreenState extends State<RegisterScreen> with Helpers {
                         style: GoogleFonts.cairo(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 10),
+                            fontSize: 10.sp),
                       ),
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
-                          minimumSize: const Size(double.infinity, 40),
+                          minimumSize:  Size(double.infinity.w, 40.h),
                           elevation: 0,
                           textStyle: GoogleFonts.cairo(),
                           backgroundColor: Color(0xff073b4c)),

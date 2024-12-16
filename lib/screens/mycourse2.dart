@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
 import 'package:hankammeleducation/api/controllers/auth_api_controllers.dart';
@@ -15,11 +18,11 @@ import 'package:hankammeleducation/utils/helpers.dart';
 class MyCourseScreenTwo extends StatefulWidget {
   MyCourseScreenTwo(
       {required this.documentId,
-        required this.title,
-        required this.grade,
-        required this.description,
-        required this.enrolled,
-        super.key});
+      required this.title,
+      required this.grade,
+      required this.description,
+      required this.enrolled,
+      super.key});
 
   String documentId;
   String title;
@@ -35,10 +38,11 @@ class _MyCourseScreenTwoState extends State<MyCourseScreenTwo>
     with SingleTickerProviderStateMixin, Helpers {
   late TabController _tabController;
   List<String> allCourses = [];
-
+  bool isConnected = false;
   @override
   void initState() {
     super.initState();
+    checkInternetConnection();
     _tabController = TabController(length: 2, vsync: this);
   }
 
@@ -58,37 +62,39 @@ class _MyCourseScreenTwoState extends State<MyCourseScreenTwo>
         title: Text(
           '${widget.title} | ${widget.grade}',
           style: GoogleFonts.cairo(
-              color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),
+              color: Colors.black,
+              fontSize: 11.sp,
+              fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
+            padding: EdgeInsets.symmetric(horizontal: 18.w),
             child: Align(
               alignment: Alignment.topRight,
               child: Text(
                 "المحتوى | ${widget.title}",
                 style: GoogleFonts.cairo(
                   fontWeight: FontWeight.bold,
-                  fontSize: 9,
+                  fontSize: 9.sp,
                 ),
               ),
             ),
           ),
           SizedBox(
-            height: 5,
+            height: 5.h,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
+            padding: EdgeInsets.symmetric(horizontal: 18.w),
             child: Align(
               alignment: Alignment.topRight,
               child: Text(
                 widget.description,
                 style: GoogleFonts.cairo(
                   fontWeight: FontWeight.bold,
-                  fontSize: 9,
+                  fontSize: 9.sp,
                 ),
               ),
             ),
@@ -97,44 +103,48 @@ class _MyCourseScreenTwoState extends State<MyCourseScreenTwo>
               future: ApiController().getAllCourses(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return SizedBox();
+                  return const SizedBox();
                 } else if (isConnected && snapshot.hasData) {
                   allCourses.clear();
                   for (BookListModel i in snapshot.data!) {
-                    allCourses.add(i.title!.toString());
+                    if(!allCourses.contains(i.title!.toString())){
+                      allCourses.add(i.title!.toString());
+                    }else{
+                      print(allCourses);
+                    }
+
                   }
-                  return SizedBox();
+                  return const SizedBox();
                 } else {
-                  return SizedBox();
+                  return const SizedBox();
                 }
               }),
           SizedBox(
-            height: 20,
+            height: 20.h,
           ),
           Container(
-            //padding: EdgeInsets.only(top: 20),
             color: Colors.white,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
               child: Container(
-                height: 40,
+                height: 40.h,
                 decoration: BoxDecoration(
                     color: const Color(0xffECECEC),
-                    borderRadius: BorderRadius.circular(8)),
+                    borderRadius: BorderRadius.circular(8.r)),
                 child: TabBar(
-                    onTap: (int tabindex) {
+                    onTap: (int tabIndex) {
                       setState(() {
-                        _tabController.index = tabindex;
+                        _tabController.index = tabIndex;
                       });
                     },
-                    labelColor: Color(0xff073b4c),
+                    labelColor: const Color(0xff073b4c),
                     dividerHeight: 0,
                     labelStyle: GoogleFonts.cairo(
-                        fontSize: 10, fontWeight: FontWeight.w700),
+                        fontSize: 10.sp, fontWeight: FontWeight.w700),
                     unselectedLabelColor: Colors.black54,
                     controller: _tabController,
                     indicatorColor: const Color(0xff144CDB),
-                    tabs: [
+                    tabs: const [
                       Tab(
                         text: "الفصول",
                       ),
@@ -146,7 +156,7 @@ class _MyCourseScreenTwoState extends State<MyCourseScreenTwo>
             ),
           ),
           SizedBox(
-            height: 40,
+            height: 40.h,
           ),
           Expanded(
             child: TabBarView(controller: _tabController, children: [
@@ -164,12 +174,24 @@ class _MyCourseScreenTwoState extends State<MyCourseScreenTwo>
             ]),
           ),
           SizedBox(
-            height: 20,
+            height: 20.h,
           )
         ],
       ),
     );
   }
-
-
+  Future<void> checkInternetConnection() async {
+    final result = await InternetAddress.lookup('example.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      setState(() {
+        isConnected = true;
+      });
+    } else {
+      setState(() {
+        isConnected = false;
+      });
+    }
+  }
 }
+
+

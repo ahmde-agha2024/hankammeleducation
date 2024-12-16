@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
@@ -34,13 +35,16 @@ class _VideoDownloaderState extends State<VideoDownloader> with Helpers {
   String _progress = "0%";
   final Box _downloadsBox = Hive.box('downloads'); // الوصول إلى صندوق التحميلات
   String _selectedCategory = "الكل"; // التصنيف الحالي
-  List<String> listAll=['الكل'];
+  List<String> listAll = ['الكل'];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     listAll.addAll(widget.allCourses);
   }
+
   Future<String> _getFilePath(String fileName) async {
     final directory = await getApplicationDocumentsDirectory();
     return "${directory.path}/$fileName";
@@ -106,7 +110,7 @@ class _VideoDownloaderState extends State<VideoDownloader> with Helpers {
         _progress = "فشل التنزيل.";
       });
 
-      showSnackBar(context, message: "Error: $e", error: true);
+      showSnackBar(context, message: "خطأ في عملية التنزيل", error: true);
     }
   }
 
@@ -147,14 +151,14 @@ class _VideoDownloaderState extends State<VideoDownloader> with Helpers {
         centerTitle: true,
         title: Text(
           "تحميل المحتوى المرئي",
-          style: GoogleFonts.cairo(fontSize: 9, fontWeight: FontWeight.bold),
+          style: GoogleFonts.cairo(fontSize: 9.sp, fontWeight: FontWeight.bold),
         ),
         actions: [
           Tooltip(
             message: 'حذف الكل',
-            textStyle: GoogleFonts.cairo(fontSize: 8, color: Colors.white),
+            textStyle: GoogleFonts.cairo(fontSize: 8.sp, color: Colors.white),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.delete_forever,
                 color: Colors.red,
               ),
@@ -170,24 +174,24 @@ class _VideoDownloaderState extends State<VideoDownloader> with Helpers {
           // واجهة التنزيل
           _isDownloading
               ? Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(16.0.r),
                   child: Column(
                     children: [
                       Text(
                         " جاري التنزيل... $_progress",
                         style: GoogleFonts.cairo(
-                            fontSize: 10, fontWeight: FontWeight.bold),
+                            fontSize: 10.sp, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       SpinKitWave(
-                        color: Color(0xff118ab2),
-                        size: 20.0,
+                        color: const Color(0xff118ab2),
+                        size: 20.0.w,
                       ),
                     ],
                   ),
                 )
               : ElevatedButton(
-                  onPressed: () async{
+                  onPressed: () async {
                     handleDownload(
                       widget.link,
                       "${widget.titleVideo}.mp4",
@@ -195,13 +199,6 @@ class _VideoDownloaderState extends State<VideoDownloader> with Helpers {
                     );
                     await SharedPrefController().listCategory(listAll: listAll);
                   },
-                  child: Text(
-                    "تنزيل الفيديو",
-                    style: GoogleFonts.cairo(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 9),
-                  ),
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -210,42 +207,50 @@ class _VideoDownloaderState extends State<VideoDownloader> with Helpers {
                       elevation: 0,
                       textStyle: GoogleFonts.cairo(),
                       backgroundColor: Color(0xff118ab2)),
+                  child: Text(
+                    "تنزيل الفيديو",
+                    style: GoogleFonts.cairo(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 9.sp),
+                  ),
                 ),
-          Divider(),
-          downloads.isEmpty?
-          SizedBox():Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "إختر المادة : ",
-                  style: GoogleFonts.cairo(
-                      fontWeight: FontWeight.bold, fontSize: 9),
+          const Divider(),
+          downloads.isEmpty
+              ? const SizedBox()
+              : Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "إختر المادة : ",
+                        style: GoogleFonts.cairo(
+                            fontWeight: FontWeight.bold, fontSize: 9.sp),
+                      ),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      DropdownButton<String>(
+                        value: _selectedCategory,
+                        items: listAll
+                            .map((category) => DropdownMenuItem(
+                                  value: category,
+                                  child: Text(
+                                    category,
+                                    style: GoogleFonts.cairo(fontSize: 10.sp),
+                                  ),
+                                ))
+                            .toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedCategory = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  width: 20,
-                ),
-                DropdownButton<String>(
-                  value: _selectedCategory,
-                  items: listAll
-                      .map((category) => DropdownMenuItem(
-                    value: category,
-                    child: Text(
-                      category,
-                      style: GoogleFonts.cairo(fontSize: 10),
-                    ),
-                  ))
-                      .toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedCategory = value!;
-                    });
-                  },
-                ),
-              ],
-            ),
-          ),
 
           // عرض قائمة التحميلات
           Expanded(
@@ -254,22 +259,21 @@ class _VideoDownloaderState extends State<VideoDownloader> with Helpers {
                     child: Text(
                     "لا تتوفر أي تنزيلات",
                     style: GoogleFonts.cairo(
-                        fontSize: 10, fontWeight: FontWeight.bold),
+                        fontSize: 10.sp, fontWeight: FontWeight.bold),
                   ))
                 : ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     itemCount: downloads.length,
                     itemBuilder: (context, index) {
                       final download = downloads[index];
                       return Card(
                         color: Colors.white,
                         child: ListTile(
-                          onTap: (){
+                          onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        VideoPlayerScreen(
+                                    builder: (context) => VideoPlayerScreen(
                                           url: download['filePath'],
                                         )));
                           },
@@ -278,19 +282,19 @@ class _VideoDownloaderState extends State<VideoDownloader> with Helpers {
                             "${download['sectionname']} - ${download['filePath'].split('/').last} ",
                             // عرض اسم الملف فقط
                             style: GoogleFonts.cairo(
-                                fontWeight: FontWeight.bold, fontSize: 8),
+                                fontWeight: FontWeight.bold, fontSize: 8.sp),
                           ),
                           subtitle: Text(
                             "${download['category']}",
                             style: GoogleFonts.cairo(
-                                fontSize: 8, fontWeight: FontWeight.bold),
+                                fontSize: 8.sp, fontWeight: FontWeight.bold),
                           ),
                           // subtitle: Text(
                           //   "${download['category']} - تاريخ التنزيل : ${download['timestamp']}",
                           //   style: GoogleFonts.cairo(fontSize: 8),
                           // ),
                           trailing: IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.delete,
                               color: Colors.red,
                             ),

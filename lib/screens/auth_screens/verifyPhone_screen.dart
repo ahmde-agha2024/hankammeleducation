@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/auth_api_controllers.dart';
 import 'package:hankammeleducation/model/api_response.dart';
@@ -84,22 +85,22 @@ class _VerifyPhoneState extends State<VerifyPhone> with Helpers {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 45),
+        padding:  EdgeInsets.symmetric(horizontal: 45.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               ' قم بإدخال رمز التأكيد المكون من 4 خانات '"${formatTime(remainingTime)}",
               style:
-                  GoogleFonts.cairo(fontWeight: FontWeight.bold, fontSize: 8),
+                  GoogleFonts.cairo(fontWeight: FontWeight.bold, fontSize: 8.sp),
             ),
             SizedBox(
-              height: 10,
+              height: 10.h,
             ),
             Row(
               children: [
                 CodeTextField(
-                  controllertext: _firstCodeTextController,
+                  controllerText: _firstCodeTextController,
                   focusNode: _firstFocusNode,
                   onChanged: (String value) {
                     if (value.isNotEmpty) {
@@ -108,11 +109,11 @@ class _VerifyPhoneState extends State<VerifyPhone> with Helpers {
                   },
                   onSubmitted: (String value) {},
                 ),
-                const SizedBox(
-                  width: 10,
+                 SizedBox(
+                  width: 10.w,
                 ),
                 CodeTextField(
-                  controllertext: _secondCodeTextController,
+                  controllerText: _secondCodeTextController,
                   focusNode: _secondFocusNode,
                   onChanged: (String value) {
                     value.isNotEmpty
@@ -121,11 +122,11 @@ class _VerifyPhoneState extends State<VerifyPhone> with Helpers {
                   },
                   onSubmitted: (String value) {},
                 ),
-                const SizedBox(
-                  width: 10,
+                 SizedBox(
+                  width: 10.w,
                 ),
                 CodeTextField(
-                  controllertext: _thirdCodeTextController,
+                  controllerText: _thirdCodeTextController,
                   focusNode: _thirdFocusNode,
                   onChanged: (String value) {
                     value.isNotEmpty
@@ -134,11 +135,11 @@ class _VerifyPhoneState extends State<VerifyPhone> with Helpers {
                   },
                   onSubmitted: (String value) {},
                 ),
-                const SizedBox(
-                  width: 10,
+                 SizedBox(
+                  width: 10.w,
                 ),
                 CodeTextField(
-                  controllertext: _fourthCodeTextController,
+                  controllerText: _fourthCodeTextController,
                   focusNode: _fourthFocusNode,
                   onChanged: (String value) {
                     if (value.isEmpty) {
@@ -150,17 +151,10 @@ class _VerifyPhoneState extends State<VerifyPhone> with Helpers {
               ],
             ),
             SizedBox(
-              height: 20,
+              height: 20.h,
             ),
             ElevatedButton(
               onPressed: () async => await _performPhoneNumber(),
-              child: Text(
-                'تأكيد',
-                style: GoogleFonts.cairo(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10),
-              ),
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -169,6 +163,13 @@ class _VerifyPhoneState extends State<VerifyPhone> with Helpers {
                   elevation: 0,
                   textStyle: GoogleFonts.cairo(),
                   backgroundColor: Color(0xff073b4c)),
+              child: Text(
+                'تأكيد',
+                style: GoogleFonts.cairo(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10.sp),
+              ),
             ),
           ],
         ),

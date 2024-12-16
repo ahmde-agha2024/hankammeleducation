@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
 import 'package:hankammeleducation/notification/fb_notifications.dart';
@@ -86,8 +87,8 @@ class _LaunchScreenState extends State<LaunchScreen> with FbNotifications {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Container(
-            decoration: BoxDecoration(
+          body:  Container(
+            decoration: const BoxDecoration(
               color: Colors.white,
             ),
             child: Column(
@@ -95,8 +96,8 @@ class _LaunchScreenState extends State<LaunchScreen> with FbNotifications {
               children: [
                 Center(
                   child: Container(
-                    height: 180,
-                    width: 180,
+                    height: 180.h,
+                    width: 180.w,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
@@ -108,8 +109,8 @@ class _LaunchScreenState extends State<LaunchScreen> with FbNotifications {
                 ),
                 Text(
                   'حنكمـــل تعليـــم',
-                  style: GoogleFonts.cairo(color: Color(0xff118ab2),
-                      fontSize: 16,
+                  style: GoogleFonts.cairo(color: const Color(0xff118ab2),
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.bold),
                 ),
 

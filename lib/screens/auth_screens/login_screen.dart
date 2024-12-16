@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/auth_api_controllers.dart';
 import 'package:hankammeleducation/model/api_response.dart';
@@ -32,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       // appBar: AppBar(
       //     centerTitle: true,
       //     title: Text(
@@ -40,13 +42,13 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
       //       fontWeight: FontWeight.bold),
       //     )),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding:  EdgeInsets.all(16.0.r),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: 200,
-              width: 200,
+              height: 200.h,
+              width: 200.w,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
@@ -56,32 +58,32 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 10.h,
             ),
             SizedBox(
-              width: double.infinity,
-              height: 40,
+              width: double.infinity.w,
+              height: 40.h,
               child: TextField(
                 controller: _phonecontroller,
                 onChanged: (value) {},
                 keyboardType: TextInputType.phone,
                 maxLength: 14,
-                style: TextStyle(fontSize: 8),
+                style: TextStyle(fontSize: 8.sp),
                 decoration: InputDecoration(
                     labelText: 'رقم الهاتف',
                     hintText: "أدخل رقم الموبايل",
-                    hintStyle: GoogleFonts.cairo(fontSize: 8),
+                    hintStyle: GoogleFonts.cairo(fontSize: 8.sp),
                     counterText: "",
                     labelStyle:
-                        GoogleFonts.cairo(fontSize: 8, color: Colors.black54),
+                        GoogleFonts.cairo(fontSize: 8.sp, color: Colors.black54),
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         borderSide:
-                            BorderSide(width: 1, color: Color(0xffef476f))),
+                            BorderSide(width: 1.w, color: Color(0xffef476f))),
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         borderSide:
-                            BorderSide(width: 1, color: Color(0xffef476f)))),
+                            BorderSide(width: 1.w, color: Color(0xffef476f)))),
               ),
             ),
             // SizedBox(
@@ -110,13 +112,13 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
             //                 BorderSide(width: 1, color: Color(0xffef476f)))),
             //   ),
             // ),
-            SizedBox(height: 20),
+            SizedBox(height: 20.h),
             loading
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
+                ?  SizedBox(
+                    width: 20.w,
+                    height: 20.h,
                     child: CircularProgressIndicator(
-                      strokeWidth: 1.0,
+                      strokeWidth: 1.0.w,
                       color: Color(0xff073b4c),
                     ),
                   )
@@ -127,13 +129,13 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                       style: GoogleFonts.cairo(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 9),
+                          fontSize: 9.sp),
                     ),
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                         ),
-                        minimumSize: const Size(double.infinity, 40),
+                        minimumSize:  Size(double.infinity.w, 40.h),
                         elevation: 0,
                         textStyle: GoogleFonts.cairo(),
                         backgroundColor: Color(0xff118ab2)),
@@ -153,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                 style: GoogleFonts.cairo(
                   color: Colors.black54,
                   fontWeight: FontWeight.bold,
-                  fontSize: 8,
+                  fontSize: 8.sp,
                 ),
               ),
             ),
@@ -166,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,),
+                      padding: EdgeInsets.zero.r,),
                   onPressed: () {
                     Navigator.pushAndRemoveUntil(
                       context,
@@ -181,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> with Helpers {
                     style: GoogleFonts.cairo(
                       color: Color(0xff118ab2),
                       fontWeight: FontWeight.bold,
-                      fontSize: 9,
+                      fontSize: 9.sp,
                     ),
                   ),
                 ),

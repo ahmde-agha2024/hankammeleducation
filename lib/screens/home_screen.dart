@@ -1,17 +1,16 @@
 import 'dart:io';
-
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
 import 'package:hankammeleducation/model/home.dart';
 import 'package:hankammeleducation/pref/shared_pref_controller.dart';
-import 'package:hankammeleducation/search/search.dart';
 import 'package:hankammeleducation/service/firebase_notification_service.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:hankammeleducation/search/search.dart';
 
 import 'primary_stages.dart';
 
@@ -64,18 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context) => AlertDialog(
           title: Text(
             "خطأ",
-            style: GoogleFonts.cairo(),
+            style: GoogleFonts.cairo(fontSize: 10.sp),
           ),
           content: Text(
             "خطأ في جلب البيانات $error",
-            style: GoogleFonts.cairo(),
+            style: GoogleFonts.cairo(fontSize: 10.sp),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(
                 "حسناً",
-                style: GoogleFonts.cairo(),
+                style: GoogleFonts.cairo(fontSize: 10.sp),
               ),
             ),
           ],
@@ -93,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _future = ApiController().getHome();
     _loadNotificationCount();
   }
+
   Future<void> _loadNotificationCount() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -134,44 +134,44 @@ class _HomeScreenState extends State<HomeScreen> {
         return Dialog(
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14), // تحكم في الزوايا
+            borderRadius: BorderRadius.circular(14.r), // تحكم في الزوايا
           ),
           child: SizedBox(
-            height: 500, // تحديد الارتفاع المناسب للـ popup
+            height: 500.h, // تحديد الارتفاع المناسب للـ popup
             child: notifications.isEmpty
                 ? Center(
                     child: Text(
                       'لا توجد إشعارات',
-                      style: GoogleFonts.cairo(),
+                      style: GoogleFonts.cairo(fontSize: 10.sp),
                     ),
                   )
                 : Column(
                     children: [
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                       Text(
                         'الإشعارات',
-                        style: GoogleFonts.cairo(fontSize: 10),
+                        style: GoogleFonts.cairo(fontSize: 10.sp),
                       ),
                       Expanded(
                         child: ListView.builder(
                           itemCount: notifications.length,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.all(8.0.r),
                               child: Card(
                                 color: Colors.white,
                                 child: ListTile(
                                   title: Text(
                                     notifications.elementAt(index)['title'] ??
                                         '',
-                                    style: GoogleFonts.cairo(fontSize: 10),
+                                    style: GoogleFonts.cairo(fontSize: 10.sp),
                                   ),
                                   subtitle: Text(
                                     notifications.elementAt(index)['body'] ??
                                         '',
-                                    style: GoogleFonts.cairo(fontSize: 9),
+                                    style: GoogleFonts.cairo(fontSize: 9.sp),
                                   ),
                                 ),
                               ),
@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                     ],
                   ),
@@ -197,16 +197,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
           color: Colors.white,
-          height: 40,
+          height: 40.h,
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 14),
+          padding: EdgeInsets.symmetric(horizontal: 14.w),
           color: Colors.white,
           child: Row(
             children: [
@@ -214,8 +213,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.zero,
                   onPressed: () => showNotificationsPopup(context),
                   icon: Image.asset(
-                    width: 35,
-                    height: 35,
+                    width: 35.w,
+                    height: 35.h,
                     notificationCount > 0
                         ? 'images/notificationcomplete 1.png'
                         : 'images/notificationcomplete.png',
@@ -228,97 +227,97 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                   icon: Image.asset(
-                    width: 35,
-                    height: 35,
+                    width: 35.w,
+                    height: 35.h,
                     'images/searchComplete.png',
                   )),
-              Spacer(),
+              const Spacer(),
               SharedPrefController().getByKey(key: PrefKeys.isLoggedIn.name) ==
                       null
-                  ? SizedBox()
+                  ? const SizedBox()
                   : Align(
                       alignment: Alignment.topRight,
                       child: Text(
                         " أهلاً وسهلاً بك : ${SharedPrefController().getByKey(key: PrefKeys.firstname.name)}",
                         style: GoogleFonts.cairo(
-                            fontWeight: FontWeight.bold, fontSize: 8),
+                            fontWeight: FontWeight.bold, fontSize: 8.sp),
                       ),
                     ),
             ],
           ),
         ),
-        Visibility(visible: _statusSearch, child: SizedBox(height: 16)),
+        Visibility(visible: _statusSearch, child: SizedBox(height: 16.h)),
         Visibility(
           visible: _statusSearch,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 14),
+            padding: EdgeInsets.symmetric(horizontal: 14.w),
             child: SizedBox(
-              width: double.infinity,
-              height: 40,
+              width: double.infinity.w,
+              height: 40.h,
               child: TextField(
                 controller: _gradeController,
                 onChanged: (value) {},
                 keyboardType: TextInputType.number,
-                style: GoogleFonts.cairo(fontSize: 8),
+                style: GoogleFonts.cairo(fontSize: 8.sp),
                 decoration: InputDecoration(
                     labelText: 'الصف (على سبيل المثال، 2)',
                     hintText: "أدخل الصف الدراسي",
-                    hintStyle: GoogleFonts.cairo(fontSize: 8),
-                    labelStyle:
-                        GoogleFonts.cairo(fontSize: 8, color: Colors.black54),
+                    hintStyle: GoogleFonts.cairo(fontSize: 8.sp),
+                    labelStyle: GoogleFonts.cairo(
+                        fontSize: 8.sp, color: Colors.black54),
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         borderSide:
-                            BorderSide(width: 1, color: Color(0xffef476f))),
+                            BorderSide(width: 1.w, color: Color(0xffef476f))),
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide:
-                            BorderSide(width: 1, color: Color(0xffef476f)))),
+                        borderRadius: BorderRadius.circular(8.r),
+                        borderSide: BorderSide(
+                            width: 1.w, color: const Color(0xffef476f)))),
               ),
             ),
           ),
         ),
-        Visibility(visible: _statusSearch, child: SizedBox(height: 16)),
+        Visibility(visible: _statusSearch, child: SizedBox(height: 16.h)),
         Visibility(
           visible: _statusSearch,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 14),
+            padding: EdgeInsets.symmetric(horizontal: 14.w),
             child: SizedBox(
-              width: double.infinity,
-              height: 40,
+              width: double.infinity.w,
+              height: 40.h,
               child: TextField(
                 controller: _searchController,
                 onChanged: (value) {},
                 keyboardType: TextInputType.text,
-                style: GoogleFonts.cairo(fontSize: 8),
+                style: GoogleFonts.cairo(fontSize: 8.sp),
                 decoration: InputDecoration(
                     labelText: 'المادة (على سبيل المثال، الرياضيات)',
                     hintText: "أدخل إسم المادة",
-                    hintStyle: GoogleFonts.cairo(fontSize: 8),
-                    labelStyle:
-                        GoogleFonts.cairo(fontSize: 8, color: Colors.black54),
+                    hintStyle: GoogleFonts.cairo(fontSize: 8.sp),
+                    labelStyle: GoogleFonts.cairo(
+                        fontSize: 8.sp, color: Colors.black54),
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         borderSide:
-                            BorderSide(width: 1, color: Color(0xffef476f))),
+                            BorderSide(width: 1.w, color: Color(0xffef476f))),
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide:
-                            BorderSide(width: 1, color: Color(0xffef476f)))),
+                        borderRadius: BorderRadius.circular(8.r),
+                        borderSide: BorderSide(
+                            width: 1.w, color: const Color(0xffef476f)))),
               ),
             ),
           ),
         ),
-        Visibility(visible: _statusSearch, child: SizedBox(height: 16)),
+        Visibility(visible: _statusSearch, child: SizedBox(height: 16.h)),
         _isLoading
             ? Visibility(
                 visible: _statusSearch,
-                child: const SizedBox(
-                  width: 20,
-                  height: 20,
+                child: SizedBox(
+                  width: 20.w,
+                  height: 20.h,
                   child: CircularProgressIndicator(
-                    strokeWidth: 1.0,
-                    color: Color(0xff073b4c),
+                    strokeWidth: 1.0.w,
+                    color: const Color(0xff073b4c),
                   ),
                 ),
               )
@@ -326,13 +325,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 visible: _statusSearch,
                 child: ElevatedButton(
                   onPressed: _performSearch,
-                  child: Text(
-                    'بحث',
-                    style: GoogleFonts.cairo(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 10),
-                  ),
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -340,37 +332,42 @@ class _HomeScreenState extends State<HomeScreen> {
                       minimumSize: const Size(80, 35),
                       elevation: 0,
                       textStyle: GoogleFonts.cairo(),
-                      backgroundColor: Color(0xff073b4c)),
+                      backgroundColor: const Color(0xff073b4c)),
+                  child: Text(
+                    'بحث',
+                    style: GoogleFonts.cairo(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10.sp),
+                  ),
                 ),
               ),
         SizedBox(
-          height: 20,
+          height: 20.h,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 14),
+          padding: EdgeInsets.symmetric(horizontal: 14.w),
           child: Container(
             clipBehavior: Clip.antiAlias,
-            width: 398,
-            height: 166,
+            width: 398.w,
+            height: 166.h,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
               color: Colors.grey.shade300,
             ),
             child: PageView.builder(
               controller: controller_page,
               itemCount: 3,
-              onPageChanged: (page) {
-                print(page);
-              },
+              onPageChanged: (page) {},
               itemBuilder: (_, index) {
                 return Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16.r),
                   ),
                   child: Image.asset(
                     'images/thanawy.jpg',
-                    width: 398,
-                    height: 166,
+                    width: 398.w,
+                    height: 166.h,
                     fit: BoxFit.cover,
                   ),
                 );
@@ -379,21 +376,21 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         SizedBox(
-          height: 14,
+          height: 14.h,
         ),
         SmoothPageIndicator(
           controller: controller_page,
           count: 3,
-          effect: const ExpandingDotsEffect(
-              dotColor: Color(0xfff58da6),
-              activeDotColor: Color(0xffef476f),
-              dotWidth: 8,
-              dotHeight: 8),
+          effect: ExpandingDotsEffect(
+              dotColor: const Color(0xfff58da6),
+              activeDotColor: const Color(0xffef476f),
+              dotWidth: 8.w,
+              dotHeight: 8.h),
           // your preferred effect
           onDotClicked: (index) {},
         ),
         SizedBox(
-          height: 20,
+          height: 20.h,
         ),
         FutureBuilder<List<HomeModel>>(
             future: _future,
@@ -408,30 +405,29 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (context, index) {
                             return Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 10),
+                                  horizontal: 14.w, vertical: 10.h),
                               child: Container(
-                                width: double.infinity,
-                                height: 150.0,
+                                width: double.infinity.w,
+                                height: 150.0.h,
                                 decoration: BoxDecoration(
                                   color: Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(16.0),
+                                  borderRadius: BorderRadius.circular(16.0.r),
                                 ),
                               ),
                             );
                           })),
                 );
               } else if (isConnected &&
-                  snapshot.data!.isNotEmpty &&
                   snapshot.hasData) {
                 return Expanded(
                   child: ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 14),
+                    padding: EdgeInsets.symmetric(horizontal: 14.w),
                     //shrinkWrap: true,
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                           child: Image.asset(
                             'images/primary.jpg',
                             fit: BoxFit.cover,
@@ -442,8 +438,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(snapshot.data![index].title!,
                               style: GoogleFonts.cairo(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                                color: Color(0xff073b4c),
+                                fontSize: 12.sp,
+                                color: const Color(0xff073b4c),
                               )),
                         ),
                         onTap: () {
@@ -465,7 +461,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     'لا يوجد بيانات',
                     style: GoogleFonts.cairo(
-                        fontSize: 14, fontWeight: FontWeight.bold),
+                        fontSize: 14.sp, fontWeight: FontWeight.bold),
                   ),
                 );
               }

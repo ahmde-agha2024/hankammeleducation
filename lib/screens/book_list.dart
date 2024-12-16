@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hankammeleducation/api/controllers/api_controller.dart';
 import 'package:hankammeleducation/course/course.dart';
@@ -37,7 +38,8 @@ class _BookListState extends State<BookList> {
         centerTitle: true,
         title: Text(
           widget.title,
-          style: GoogleFonts.cairo(fontSize: 11, fontWeight: FontWeight.bold),
+          style:
+              GoogleFonts.cairo(fontSize: 11.sp, fontWeight: FontWeight.bold),
         ),
       ),
       body: FutureBuilder<List<BookListModel>>(
@@ -50,42 +52,40 @@ class _BookListState extends State<BookList> {
                 highlightColor: Colors.grey[100]!,
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 40.h),
                   child: GridView.builder(
                     shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 5.0,
-                      mainAxisSpacing: 5.0,
+                      crossAxisSpacing: 5.0.w,
+                      mainAxisSpacing: 5.0.h,
                     ),
                     itemCount: 10,
                     itemBuilder: (context, index) {
                       return Container(
                         decoration: BoxDecoration(
                           color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(16.0),
+                          borderRadius: BorderRadius.circular(16.0.r),
                         ),
                       );
                     },
                   ),
                 ),
               );
-            } else if (isConnected &&
-                snapshot.data!.isNotEmpty &&
-                snapshot.hasData) {
+            } else if (isConnected && snapshot.hasData) {
               return GridView.builder(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0.r),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 2 / 3,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10.w,
+                  mainAxisSpacing: 10.h,
                 ),
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  double progress = snapshot.data![index].courseCompletion!.toDouble();
-                  progress = progress/100;
+                  double progress =
+                      snapshot.data![index].courseCompletion!.toDouble();
+                  progress = progress / 100;
                   return InkWell(
                     onTap: () {
                       Navigator.push(
@@ -107,42 +107,42 @@ class _BookListState extends State<BookList> {
                       elevation: 0,
                       clipBehavior: Clip.antiAlias,
                       shape: RoundedRectangleBorder(
-                        side:
-                            BorderSide(width: 0.5, color: Colors.grey.shade300),
-                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(
+                            width: 0.5.w, color: Colors.grey.shade300),
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: 5,
+                              height: 5.h,
                             ),
                             snapshot.data![index].courseImage == null
                                 ? Image.network(
                                     'https://tadamon.s3.eu-west-2.amazonaws.com/medium_news_blog_banner_1200x675_feb457f8e1.png',
-                                    height: 130,
+                                    height: 130.h,
                                     fit: BoxFit.contain)
                                 : Image.network(
                                     snapshot.data![index].courseImage!.formats!
                                         .medium!.url!,
-                                    height: 130,
+                                    height: 130.h,
                                     fit: BoxFit.contain),
                             Padding(
-                              padding: const EdgeInsets.all(4.0),
+                              padding: EdgeInsets.all(4.0.r),
                               child: Row(
                                 children: [
                                   Text(
                                     "المادة : ",
                                     style: GoogleFonts.cairo(
-                                        fontSize: 9,
+                                        fontSize: 9.sp,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Expanded(
                                     child: Text(
                                       snapshot.data![index].title!,
                                       style: GoogleFonts.cairo(
-                                        fontSize: 9,
+                                        fontSize: 9.sp,
                                       ),
                                     ),
                                   ),
@@ -150,7 +150,8 @@ class _BookListState extends State<BookList> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 4.0,bottom: 5),
+                              padding:
+                                  EdgeInsets.only(right: 4.0.sp, bottom: 5.h),
                               child: Row(
                                 children: [
                                   // Text("التقييم :",
@@ -159,25 +160,28 @@ class _BookListState extends State<BookList> {
                                   //         fontSize: 12,
                                   //         fontWeight: FontWeight.bold)),
 
-
                                   Expanded(
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 4.w),
                                       child: LinearProgressIndicator(
-                                        borderRadius: BorderRadius.circular(12),
-                                        value: progress/10, // نسبة التقدم
-                                        minHeight: 5,
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                        value: progress / 10,
+                                        // نسبة التقدم
+                                        minHeight: 5.h,
                                         color: Colors.blue,
                                         backgroundColor: Colors.grey[300],
                                       ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 4.w),
                                     child: Text(
                                       '${(progress).toStringAsFixed(1)}%',
                                       style: GoogleFonts.cairo(
-                                          fontSize: 7,
+                                          fontSize: 7.sp,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -199,36 +203,34 @@ class _BookListState extends State<BookList> {
                                 ],
                               ),
                             ),
-
-
-                            Divider(
+                            const Divider(
                               thickness: 0.5,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 6),
+                              padding: EdgeInsets.only(right: 6.w),
                               child: Row(
                                 textDirection: TextDirection.ltr,
                                 children: [
-                                  Spacer(),
+                                  const Spacer(),
                                   Align(
                                       alignment: Alignment.bottomRight,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 5),
+                                        padding: EdgeInsets.only(left: 5.w),
                                         child: Text(
                                           'عدد الفصول: ${snapshot.data![index].curriculum.length}',
                                           style: GoogleFonts.cairo(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 8,
+                                              fontSize: 8.sp,
                                               color: Colors.grey),
                                         ),
                                       )),
                                   SizedBox(
-                                    width: 5,
+                                    width: 5.w,
                                   ),
                                   Icon(
                                     Icons.play_circle_outline_outlined,
                                     color: Colors.black26,
-                                    size: 14,
+                                    size: 14.w,
                                   ),
                                 ],
                               ),
@@ -245,7 +247,7 @@ class _BookListState extends State<BookList> {
                 child: Text(
                   "لا يوجد بيانات",
                   style: GoogleFonts.cairo(
-                      fontSize: 14, fontWeight: FontWeight.bold),
+                      fontSize: 14.sp, fontWeight: FontWeight.bold),
                 ),
               );
             }
